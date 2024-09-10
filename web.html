@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="web.css">
+  <title>WEBSITE 1101</title>
+</head>
+
+<body id="body">
+  <div class="top">
+    <marquee direction="left" style="font-size: 30px;">
+      <p id="title"><b><i>WELCOME TO MY WEB.</i></b></p>
+    </marquee>
+  </div>
+  <div class="container">
+    <img src="" alt="" id="image">
+    <input type="text" id="edit" placeholder="EDIT BOX HERE">
+    <form>
+      <label>HEIGHT:</label>
+      <input type="range" id="sh" max="350" min="0" style="width:200px;">
+      <br>
+      <br>
+      <label>WIDTH:</label>&nbsp;&nbsp;
+      <input type="range" id="sw" max="350" min="0" style="width: 200px;">
+    </form>
+    <br>
+    <input type="file" id="isrc">
+    <br>
+
+    <div id="theme">
+      <div id="circle"></div>
+    </div>
+  </div>
+  <script>
+    var body = document.getElementById("body")
+    var root = document.querySelector(":root")
+    var rootstyle = getComputedStyle(root)
+    var phc = rootstyle.getPropertyValue("--phc")
+    var tcol = rootstyle.getPropertyValue("--t")
+    var edt = document.getElementById("edit")
+    var img = document.getElementById("image")
+    var isrc = document.getElementById("isrc")
+    var sh = document.getElementById("sh")
+    var sw = document.getElementById("sw")
+    var t = document.getElementById("theme")
+    var cir = document.getElementById("circle");
+    var thm = localStorage.getItem("theme");
+    if (thm == "dark") {
+      body.style.backgroundColor = "#222";
+      body.style.color = "white";
+      edt.style.background = "#454545"
+      root.style.setProperty("--t", "white")
+      root.style.setProperty("--phc", "white")
+      cir.style.left = "37px"
+    } else {
+      body.style.backgroundColor = "white";
+      body.style.color = "black";
+      edt.style.background = "#EEEEEE";
+      root.style.setProperty("--t", "black")
+      root.style.setProperty("--phc", "black")
+      cir.style.left = "5px"
+    }
+    t.addEventListener("click", function() {
+      var theme = localStorage.getItem("theme")
+      if (theme == "dark") {
+        body.style.backgroundColor = "white";
+        body.style.color = "black";
+        cir.style.left = "5px";
+        edt.style.background = "#EEEEEE"
+        root.style.setProperty("--phc", "black")
+        root.style.setProperty("--t", "black")
+        localStorage.setItem("theme", "light")
+      } else {
+        body.style.backgroundColor = "#222";
+        body.style.color = "white";
+        cir.style.left = "37px";
+        edt.style.background = "#454545"
+        root.style.setProperty("--phc", "white")
+        root.style.setProperty("--t", "white")
+        localStorage.setItem("theme", "dark")
+      }
+    })
+    isrc.addEventListener("change", function() {
+      img.src = URL.createObjectURL(isrc.files[0])
+    })
+    sh.addEventListener("input", function() {
+      img.style.height = sh.value + 'px';
+    })
+    sw.addEventListener("input", function() {
+      img.style.width = sw.value + 'px';
+    })
+    edt.addEventListener("input", function() {
+      img.style.background = edt.value;
+      img.style.borderRadius = edt.value + 'px';
+    })
+  </script>
+</body>
+
+</html>
