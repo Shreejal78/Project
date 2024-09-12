@@ -16,7 +16,13 @@
   </div>
   <div class="container">
     <img src="" alt="" id="image">
-    <input type="text" id="edit" placeholder="EDIT BOX HERE">
+    <form>
+      <div id="inph">
+        <input type="text" id="edit">
+        <div id="ph">EDIT BOX HERE</div>
+      </div>
+    </form>
+
     <form>
       <label>HEIGHT:</label>
       <input type="range" id="sh" max="350" min="0" style="width:200px;">
@@ -38,7 +44,7 @@
     var root = document.querySelector(":root")
     var rootstyle = getComputedStyle(root)
     var phc = rootstyle.getPropertyValue("--phc")
-    var tcol = rootstyle.getPropertyValue("--t")
+    var ph = rootstyle.getPropertyValue("--ph")
     var edt = document.getElementById("edit")
     var img = document.getElementById("image")
     var isrc = document.getElementById("isrc")
@@ -50,15 +56,15 @@
     if (thm == "dark") {
       body.style.backgroundColor = "#222";
       body.style.color = "white";
-      edt.style.background = "#454545"
-      root.style.setProperty("--t", "white")
+      edt.style.background = "transparent"
+      root.style.setProperty("--ph", "#222")
       root.style.setProperty("--phc", "white")
       cir.style.left = "37px"
     } else {
       body.style.backgroundColor = "white";
       body.style.color = "black";
-      edt.style.background = "#EEEEEE";
-      root.style.setProperty("--t", "black")
+      edt.style.background = "transparent";
+      root.style.setProperty("--ph", "#fff")
       root.style.setProperty("--phc", "black")
       cir.style.left = "5px"
     }
@@ -68,17 +74,17 @@
         body.style.backgroundColor = "white";
         body.style.color = "black";
         cir.style.left = "5px";
-        edt.style.background = "#EEEEEE"
+        edt.style.background = "transparent";
         root.style.setProperty("--phc", "black")
-        root.style.setProperty("--t", "black")
+        root.style.setProperty("--ph", "#fff")
         localStorage.setItem("theme", "light")
       } else {
         body.style.backgroundColor = "#222";
         body.style.color = "white";
         cir.style.left = "37px";
-        edt.style.background = "#454545"
+        edt.style.background = "transparent"
         root.style.setProperty("--phc", "white")
-        root.style.setProperty("--t", "white")
+        root.style.setProperty("--ph", "#222")
         localStorage.setItem("theme", "dark")
       }
     })
@@ -94,6 +100,9 @@
     edt.addEventListener("input", function() {
       img.style.background = edt.value;
       img.style.borderRadius = edt.value + 'px';
+    })
+    edt.addEventListener("focusout",function(){
+      edt.value = ""
     })
   </script>
 </body>

@@ -1,88 +1,123 @@
-.top{
+.top {
   display: flex;
   width: 100%;
 }
-:root{
-  --phc:black;
-  --t:white;
+
+:root {
+  --phc: black;
+  --ph: white;
 }
 
-#title{
-  text-shadow: .5px 3.5px 5px var(--t);
-  
+#title {
+  text-shadow: .5px 3.5px 5px var(--phc);
+
 }
-@keyframes rainbow{
-  0%{
+
+@keyframes rainbow {
+  0% {
     text-shadow: 0 5px 20px red;
   }
-  20%{
+
+  20% {
     text-shadow: 0 5px 20px yellow;
   }
-  40%{
+
+  40% {
     text-shadow: 0 5px 20px green;
   }
-  60%{
+
+  60% {
     text-shadow: 0 5px 20px purple;
   }
-  80%{
+
+  80% {
     text-shadow: 0 0 10px blue;
   }
-  100%{
+
+  100% {
     text-shadow: 0 0 10px pink;
   }
 }
-body{
+
+body {
   display: flex;
   flex-direction: column;
   gap: 40px;
   justify-content: center;
   align-items: center
 }
-.container{
-  display:flex;
+
+.container {
+  display: flex;
   justify-content: center;
   gap: 20px;
-  flex-direction:column;
+  flex-direction: column;
   align-items: center;
 }
-#edit{
-  height:25px;
-  font-size: 20px;
-  color:white;
-  width :200px;
-  background:#454545;
-  border:1px solid black;
-  
+
+#edit {
+  outline: none;
+  height: 25px;
+  font-size: 12px;
+  color: var(--phc);
+  width: 200px;
+  border: 2px solid black;
+  transition:0.4s ease-in-out;
+
 }
 #edit:focus{
-  outline:none;
-  outline-style: inset;
+  transform: scale(1.5);
+  
 }
-::-webkit-input-placeholder{
-  color:var(--phc);
-  animation:6s rainbow ease infinite;
-  font-style:italic;
+#edit:focus + #ph{
+  padding: 5px;
+  color: var(--phc);
+  top:-20px;
+  left:-10px;
+  transform: scale(0.75);
+  background: var(--ph);
 }
-#theme{
+
+#inph {
+  position: relative;
+}
+
+#ph {
+  position: absolute;
+  z-index: 4;
+  transition: 0.30s ease-in-out;
+  pointer-events: none;
+  color: var(--phc);
+  animation: 6s rainbow ease infinite;
+  padding: 0 0 0 5px;
+  top: 5px;
+  left: 0px;
+  font-weight: 600;
+  font-style: italic;
+}
+
+#theme {
   position: relative;
   height: 40px;
   width: 70px;
-  background: linear-gradient(to right,white,#222);
-  border-radius:30px;
+  background: linear-gradient(to right, white, #222);
+  border-radius: 30px;
   box-shadow: 2px 2.5px rgba(0, 0, 0, 0.7);
 }
-#circle{
-  position:absolute;
-  box-shadow:2px 2.5px rgba(0, 0, 0, 0.65);
-  top:4.5px;
+
+#circle {
+  position: absolute;
+  box-shadow: 2px 2.5px rgba(0, 0, 0, 0.65);
+  top: 4.5px;
   height: 27px;
   width: 27px;
-  border-radius:50%;
+  border-radius: 50%;
   background: black;
   transition: 0.2s ease-in-out;
 }
-#image{
-  height:100px ;
-  width:100px ;
+
+#image {
+  height: 100px;
+  width: 100px;
   transition: 0.75s ease;
 }
