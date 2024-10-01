@@ -8,6 +8,33 @@
   --ph: white;
 }
 
+
+#isrc {
+  display: none;
+}
+
+#isrclb {
+
+  font: inherit;
+  background: linear-gradient(to left,red,orange);
+  box-shadow: 5px 2px 2.5px #333;
+  border: 0;
+  color: #242424;
+  border-radius: 0.5em;
+  font-size: 1rem;
+  padding: 0.375em 1em;
+  font-weight: 600;
+  transition: 0.15s ease;
+  cursor: pointer;
+}
+
+isrclb:active {
+  transform: scale(0.88)
+}
+
+
+
+
 #title {
   text-shadow: .5px 3.5px 5px var(--phc);
 
@@ -47,6 +74,37 @@ body {
   align-items: center
 }
 
+.box {
+  display: flex;
+}
+
+.box .eye {
+  position: relative;
+  display: block;
+  height: 50px;
+  width: 50px;
+  background: #fff;
+  margin: 0 10px;
+  border-radius: 50%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+
+}
+
+.box .eye::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 13px;
+  border: 3px solid red;
+  box-sizing: border-box;
+  transform: translate(-50%, -50%);
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #000;
+
+}
+
 .container {
   display: flex;
   justify-content: center;
@@ -62,18 +120,20 @@ body {
   color: var(--phc);
   width: 200px;
   border: 2px solid black;
-  transition:0.4s ease-in-out;
+  transition: 0.4s ease-in-out;
 
 }
-#edit:focus{
+
+#edit:focus {
   transform: scale(1.5);
-  
+
 }
-#edit:focus + #ph{
+
+#edit:focus+#ph {
   padding: 5px;
   color: var(--phc);
-  top:-20px;
-  left:-10px;
+  top: -20px;
+  left: -10px;
   transform: scale(0.75);
   background: var(--ph);
 }

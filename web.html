@@ -5,13 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="web.css">
+  <link rel="website icon" href="zoro.jpg">
   <title>WEBSITE 1101</title>
 </head>
 
 <body id="body">
   <div class="top">
     <marquee direction="left" style="font-size: 30px;">
-      <p id="title"><b><i>WELCOME TO MY WEB.</i></b></p>
+      <p id="title"><b><i>WELCOME TO MY WEB .🇳🇵</i></b></p>
     </marquee>
   </div>
   <div class="container">
@@ -32,7 +33,10 @@
       <input type="range" id="sw" max="350" min="0" style="width: 200px;">
     </form>
     <br>
-    <input type="file" id="isrc">
+    <form>
+      <label for="isrc" id="isrclb">Upload Image</label>
+      <input type="file" id="isrc">
+    </form>
     <br>
 
     <div id="theme">
@@ -101,9 +105,21 @@
       img.style.background = edt.value;
       img.style.borderRadius = edt.value + 'px';
     })
-    edt.addEventListener("focusout",function(){
+    edt.addEventListener("focusout", function() {
       edt.value = ""
     })
+    document.querySelector("body").addEventListener("mousemove", eyeball());
+    
+    function eyeball() {
+      const eye = document.querySelectorAll(".eye")
+      eye.forEach(function(eye) {
+        let x = (eye.getBoundingClientRect().left) + (eye.clientWidth / 2);
+        let y = (eye.getBoundingClientRect().top) + (eye.clientHeight / 2);
+        let radian = Math.atan2(event.pageX - x, event.pageY - y);
+        let rotation = (radian * (180 / Math.PI) * -1) + 270;
+        eye.style.transform = "rotation(" + rotation + "deg)"
+      })
+    }
   </script>
 </body>
 
