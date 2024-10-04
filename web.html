@@ -149,7 +149,8 @@
       recognition.onresult = function(event) {
         const transcript = event.results[0][0].transcript;
         result.textContent = transcript;
-        img.style.backgroundColor = transcript;
+        let noSpaces = transcript.replace(/\s+/g, '');
+        img.style.backgroundColor = noSpaces;
         img.style.borderRadius = transcript + "px";
       };
       recognition.onerror = function(event) {
