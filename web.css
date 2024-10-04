@@ -6,6 +6,7 @@
 :root {
   --phc: black;
   --ph: white;
+  --w: 0;
 }
 
 
@@ -14,26 +15,51 @@
 }
 
 #isrclb {
-
+  position: relative;
   font: inherit;
-  background: linear-gradient(to left,red,orange);
-  box-shadow: 5px 2px 2.5px #333;
-  border: 0;
-  color: #242424;
+  background: rgba(255, 65, 65, 0.92);
+  box-shadow: 0px 0px 10px cyan,
+    0 0 20px cyan,
+    0 0 30px cyan,
+    0 0 40px cyan;
+  border: 1px inherit black;
+  color: white;
+  text-shadow: 0px 0px 10px white,
+    0 0 20px white,
+    0 0 30px white,
+    0 0 40px white;
   border-radius: 0.5em;
-  font-size: 1rem;
-  padding: 0.375em 1em;
+  font-size: 17px;
+  padding: 10px 20px;
   font-weight: 600;
-  transition: 0.15s ease;
-  cursor: pointer;
+  transition: 1s ease;
 }
 
-isrclb:active {
-  transform: scale(0.88)
+@keyframes upload {
+  0% {
+    font-size: 15px;
+  }
+
+  50% {
+    font-size: 17px;
+  }
+
+  100% {
+    font-size: 15px;
+  }
 }
 
-
-
+#isrclb:before {
+  content: "";
+  position: absolute;
+  height: 2px;
+  background: #1AADFF;
+  bottom: 0.7px;
+  left: 1.4px;
+  width: 0;
+  border-radius: 0 0 0 20px;
+  transition: 1s ease-in-out;
+}
 
 #title {
   text-shadow: .5px 3.5px 5px var(--phc);
@@ -126,12 +152,13 @@ body {
 
 #edit:focus {
   transform: scale(1.5);
-
+  border-color: #47E800;
+  border-radius: 10px;
 }
 
 #edit:focus+#ph {
   padding: 5px;
-  color: var(--phc);
+  color: #47E800;
   top: -20px;
   left: -10px;
   transform: scale(0.75);
@@ -140,6 +167,8 @@ body {
 
 #inph {
   position: relative;
+  display: flex;
+  gap: 5px;
 }
 
 #ph {
@@ -167,12 +196,11 @@ body {
 
 #circle {
   position: absolute;
-  box-shadow: 2px 2.5px rgba(0, 0, 0, 0.65);
   top: 4.5px;
   height: 27px;
   width: 27px;
   border-radius: 50%;
-  background: black;
+  object-fit: cover;
   transition: 0.2s ease-in-out;
 }
 
@@ -181,3 +209,17 @@ body {
   width: 100px;
   transition: 0.75s ease;
 }
+
+.base {
+  display: flex;
+  gap: 25px;
+  padding: 10px;
+  border-radius: 30px;
+}
+
+.links {
+  height: 35px;
+  width: 35px;
+}
+
+

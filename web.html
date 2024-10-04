@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="web.css">
-  <link rel="website icon" href="zoro.jpg">
+  <link rel="website icon" href="wolf-head-amazing-logo-illustration_74472-391.jpg">
   <title>WEBSITE 1101</title>
 </head>
 
@@ -17,12 +17,14 @@
   </div>
   <div class="container">
     <img src="" alt="" id="image">
-    <form>
-      <div id="inph">
-        <input type="text" id="edit">
-        <div id="ph">EDIT BOX HERE</div>
+    <div id="inph">
+      <input type="text" id="edit">
+      <div id="ph">EDIT BOX HERE</div>
+      <div>
+        <button id="start-btn" style="border-radius:50px;"><img src="microphone.png" alt="" style="height: 20px;width: 20px;"></button>
       </div>
-    </form>
+    </div>
+    <p id="result"></p>
 
     <form>
       <label>HEIGHT:</label>
@@ -34,14 +36,26 @@
     </form>
     <br>
     <form>
-      <label for="isrc" id="isrclb">Upload Image</label>
-      <input type="file" id="isrc">
+      <div style="display:flex;gap: 50px;">
+        <label for="isrc" id="isrclb">Upload Image</label>
+        <input type="file" id="isrc">
+        <div id="theme">
+          <div id="circle"><img src="full-moon.png" alt="" id="cimg" style="height: 30px;width:30px;"></div>
+        </div>
+      </div>
     </form>
     <br>
+  </div>
+  <div class="base">
 
-    <div id="theme">
-      <div id="circle"></div>
-    </div>
+    <a href="https://www.facebook.com/shreejal.twayana.100"><img src="facebook.png" alt="" class="links"></a>
+    <a href="https://youtube.com/@lggamer-lg2sd?si=aAUf6zz8gwkf_DOA"><img src="youtube.png" alt="" class="links"></a>
+    <a href="https://www.instagram.com/shreejal.twayana?igsh=NHRkMzF3ZGhmYWdk"><img src="instagram.png" alt="" class="links"></a>
+    <a href="calculator.html"><img src="calculator.png" alt="" class="links"></a>
+
+  </div>
+
+
   </div>
   <script>
     var body = document.getElementById("body")
@@ -51,11 +65,14 @@
     var ph = rootstyle.getPropertyValue("--ph")
     var edt = document.getElementById("edit")
     var img = document.getElementById("image")
+    var cimg = document.getElementById("cimg")
     var isrc = document.getElementById("isrc")
     var sh = document.getElementById("sh")
     var sw = document.getElementById("sw")
     var t = document.getElementById("theme")
     var cir = document.getElementById("circle");
+    const result = document.getElementById('result');
+    const startBtn = document.getElementById('start-btn');
     var thm = localStorage.getItem("theme");
     if (thm == "dark") {
       body.style.backgroundColor = "#222";
@@ -64,6 +81,7 @@
       root.style.setProperty("--ph", "#222")
       root.style.setProperty("--phc", "white")
       cir.style.left = "37px"
+      cimg.src = "full-moon.png";
     } else {
       body.style.backgroundColor = "white";
       body.style.color = "black";
@@ -71,6 +89,7 @@
       root.style.setProperty("--ph", "#fff")
       root.style.setProperty("--phc", "black")
       cir.style.left = "5px"
+      cimg.src = "sun.png";
     }
     t.addEventListener("click", function() {
       var theme = localStorage.getItem("theme")
@@ -78,6 +97,7 @@
         body.style.backgroundColor = "white";
         body.style.color = "black";
         cir.style.left = "5px";
+        cimg.src = "sun.png"
         edt.style.background = "transparent";
         root.style.setProperty("--phc", "black")
         root.style.setProperty("--ph", "#fff")
@@ -86,6 +106,7 @@
         body.style.backgroundColor = "#222";
         body.style.color = "white";
         cir.style.left = "37px";
+        cimg.src = "full-moon.png";
         edt.style.background = "transparent"
         root.style.setProperty("--phc", "white")
         root.style.setProperty("--ph", "#222")
@@ -109,7 +130,7 @@
       edt.value = ""
     })
     document.querySelector("body").addEventListener("mousemove", eyeball());
-    
+
     function eyeball() {
       const eye = document.querySelectorAll(".eye")
       eye.forEach(function(eye) {
@@ -119,6 +140,27 @@
         let rotation = (radian * (180 / Math.PI) * -1) + 270;
         eye.style.transform = "rotation(" + rotation + "deg)"
       })
+    }
+
+    if ('webkitSpeechRecognition' in window) {
+      const recognition = new webkitSpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        result.textContent = transcript;
+        img.style.backgroundColor = transcript;
+        img.style.borderRadius = transcript + "px";
+      };
+      recognition.onerror = function(event) {
+        console.error('Speech recognition error:', event.error);
+      };
+      startBtn.onclick = function() {
+        result.textContent = 'Listening...';
+        recognition.start();
+      };
+    } else {
+      result.textContent = 'Speech recognition is not supported in this browser.';
     }
   </script>
 </body>
