@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Clicker Game</title>
+  <style>
+    body {
+      background-color: #282c34;
+
+    }
+
+    .main {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #282c34;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    #game-container {
+      position: relative;
+      width: 350px;
+      height: 400px;
+      border: 2px solid #333;
+      background-color: #fff;
+      overflow: hidden;
+      border-radius: 5px;
+    }
+
+    .square {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+
+    #score {
+      font-size: 24px;
+      margin: 20px;
+    }
+
+    #timer {
+      font-size: 24px;
+      color: red;
+      margin: 20px;
+    }
+
+    #game-over {
+      display: none;
+      font-size: 28px;
+      margin: 20px;
+    }
+
+    #restart-btn {
+      display: none;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #restart-btn:hover {
+      background-color: #45a049;
+    }
+
+    h1 {
+      padding: 20px;
+      text-shadow: 0 0 10px cyan,
+        0 0 20px cyan,
+        0 0 30px cyan;
+    }
+
+    .home {
+      margin: 10px;
+      padding: 7px;
+      border: 2px solid black;
+      border-radius: 50%;
+      max-width: fit-content;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="home">
+    <a href="games.html"><img src="home.png" alt="" style="height: 35px;width:35px;"></a>
+  </div>
+  <div class="main">
+    <h1>Click the box as fast as you can !!</h1>
+    <div id="game-container"></div>
+    <div id="score">Score: 0</div>
+    <div id="timer">Time: 30</div>
+    <div id="game-over">Game Over!</div>
+    <button id="restart-btn">Restart Game</button>
+  </div>
+
+  <script>
+    const gameContainer = document.getElementById("game-container");
+    const scoreDisplay = document.getElementById("score");
+    const timerDisplay = document.getElementById("timer");
+    const gameOverDisplay = document.getElementById("game-over");
+    const restartBtn = document.getElementById("restart-btn");
+
+    let score = 0;
+    let timeLeft = 30;
+    let timerInterval;
+    let isGameOver = false; // Flag to check if the game is over
+
+    function startGame() {
+      score = 0;
+      timeLeft = 30;
+      scoreDisplay.textContent = "Score: " + score;
+      timerDisplay.textContent = "Time: " + timeLeft;
+      gameOverDisplay.style.display = "none";
+      restartBtn.style.display = "none";
+      gameContainer.innerHTML = ""; // Clear the game area
+      isGameOver = false; // Reset game over flag
+
+      timerInterval = setInterval(updateTimer, 1000); // Update the timer every second
+      createSquare(); // Create the first square immediately
+    }
+
+    function createSquare() {
+      if (isGameOver) return; // Prevent creating squares if the game is over
+
+      const square = document.createElement("div");
+      square.classList.add("square");
+      square.style.backgroundColor = getRandomColor();
+      square.style.top = Math.random() * (gameContainer.clientHeight - 50) + "px";
+      square.style.left = Math.random() * (gameContainer.clientWidth - 50) + "px";
+
+      square.addEventListener("click", function() {
+        if (isGameOver) return; // Prevent scoring if the game is over
+        score++;
+        scoreDisplay.textContent = "Score: " + score;
+        square.remove(); // Remove the square when clicked
+        createSquare(); // Create a new square
+      });
+
+      gameContainer.appendChild(square);
+
+      // Set a timeout to remove the square after 500 milliseconds if it hasn't been clicked
+      setTimeout(() => {
+        if (square.parentElement && !isGameOver) { // Check if the square is still in the DOM and game is not over
+          square.remove(); // Remove the square
+          createSquare(); // Create a new square
+        }
+      }, 500);
+    }
+
+    function updateTimer() {
+      timeLeft--;
+      timerDisplay.textContent = "Time: " + timeLeft;
+
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        isGameOver = true; // Set game over flag
+        gameOverDisplay.style.display = "block";
+        restartBtn.style.display = "block"; // Show restart button
+        // Remove any remaining squares
+        const squares = document.querySelectorAll('.square');
+        squares.forEach(square => square.remove());
+      }
+    }
+
+    function getRandomColor() {
+      const letters = "0123456789ABCDEF";
+      let color = "#";
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    restartBtn.addEventListener("click", startGame); // Restart the game on button click
+
+    // Start the game on page load
+    startGame();
+  </script>
+</body>
+
+</html>

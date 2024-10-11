@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catch the Square Game</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    #hint {
+      margin: 20px;
+      text-shadow: 0 0 10px cyan,
+        0 0 20px cyan,
+        0 0 30px cyan,
+        0 0 40px cyan;
+    }
+
+    body {
+      background: #282c34;
+    }
+
+    .main {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 85vh;
+      background-color: #282c34;
+      font-family: 'Arial', sans-serif;
+      color: white;
+      gap: 10px;
+    }
+
+    .game-container {
+      position: relative;
+      max-width: 720px;
+      width: 80%;
+      height: 400px;
+      background-color: #20232a;
+      border: 2px solid #61dafb;
+      overflow: hidden;
+    }
+
+    .square {
+      width: 50px;
+      height: 50px;
+      background-color: #61dafb;
+      position: absolute;
+      top: 50px;
+      left: 50px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      border-radius: 5px;
+    }
+
+    .score-board {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      font-size: 20px;
+    }
+
+    .home {
+      margin: 10px;
+      padding: 7px;
+      border: 2px solid black;
+      border-radius: 50%;
+      max-width: fit-content;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="home">
+    <a href="games.html">
+      <img src="home.png" alt="" style="height: 35px;width:35px;">
+    </a>
+  </div>
+  <div class="main">
+    <h1 id="hint">Tap the Square as fast as possible before it escapes.</h1>
+    <div class="game-container">
+      <div class="square"></div>
+      <div class="score-board">Score: <span id="score">0</span></div>
+    </div>
+  </div>
+
+  <script>
+    const square = document.querySelector('.square');
+    const scoreDisplay = document.getElementById('score');
+    let score = 0;
+    let speed = 1000; // Start with 1 second
+
+    function randomPosition() {
+      const gameContainer = document.querySelector('.game-container');
+      const containerWidth = gameContainer.clientWidth;
+      const containerHeight = gameContainer.clientHeight;
+
+      const randomX = Math.floor(Math.random() * (containerWidth - 50)); // Adjust for square size
+      const randomY = Math.floor(Math.random() * (containerHeight - 50));
+
+      square.style.left = `${randomX}px`;
+      square.style.top = `${randomY}px`;
+    }
+
+    function updateScore() {
+      score++;
+      scoreDisplay.textContent = score;
+      speed = Math.max(200, speed - 50); // Increase speed as score increases
+      clearInterval(moveSquare); // Reset interval with new speed
+      moveSquare = setInterval(randomPosition, speed);
+    }
+
+    square.addEventListener('click', updateScore);
+
+    let moveSquare = setInterval(randomPosition, speed);
+  </script>
+</body>
+
+</html>
