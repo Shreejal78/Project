@@ -48,6 +48,7 @@
     }
 
     .controls {
+      width:90%;
       position: absolute;
       bottom: 20px;
       left: 50%;
@@ -59,7 +60,7 @@
     }
 
     .control-button {
-      padding: 10px;
+      padding: 10px 20px 10px 20px;
       font-size: 20px;
       background-color: #333;
       color: white;
@@ -71,12 +72,13 @@
     .control-button:hover {
       background-color: #555;
     }
-    .home{
+
+    .home {
       position: absolute;
       z-index: 3;
-      top:25px;
-      right:25px;
-      border:2px solid black;
+      top: 25px;
+      right: 25px;
+      border: 2px solid black;
       border-radius: 50%;
       padding: 8px;
     }
@@ -84,19 +86,21 @@
 </head>
 
 <body>
-    <div class="home">
-      <a href="games.html"><img src="home.png" alt="" style="height: 35px;width:35px;"></a>
-    </div>
+  <div class="home">
+    <a href="games.html"><img src="home.png" alt="" style="height: 35px;width:35px;"></a>
+  </div>
   <div class="main">
     <canvas id="gameCanvas" width="360" height="600"></canvas>
     <div id="score">Score: 0</div>
     <button id="restart-btn" onclick="startGame()">Restart Game</button>
     <div class="controls">
       <div style="display:flex; gap: 10px;">
-        <button class="control-button" id="leftButton">Left</button>
-        <button class="control-button" id="rightButton">Right</button>
+        <button class="control-button" id="leftButton">◀</button>
+        <button class="control-button" id="rightButton">▶</button>
       </div>
-      <button class="control-button" id="shootButton">Shoot</button>
+      <div class="shoot">
+        <button class="control-button" id="shootButton">Shoot</button>
+      </div>
     </div>
   </div>
   <script>
