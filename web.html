@@ -45,8 +45,54 @@
         </div>
       </div>
     </form>
-    <br>
   </div>
+  <div class="music">
+    <marquee direction="left" style="font-size: 14px;">
+      <h2 id="song-title">Select a song to play</h2>
+    </marquee>
+
+
+    <div id="progss">
+      <button id="play-pause-btn" onclick="togglePlayPause()">▶</button>
+      <input type="range" id="progress-bar" value="0" max="100">
+      <span id="current-time">0:00</span> / <span id="total-time">0:00</span>
+    </div>
+    <div class="selection">
+      <label for="song-select">Song:</label>
+      <select id="song-select" onchange="changeSong()">
+        <option value="Montagem Coral [ Phonk ] estátua de solo loving_1729795211883.mp3" data-title="Montagem Coral[Phonk]">Montagem Coral[Phonk]</option>
+        <option value="Lost Sky - Fearless pt.II (feat. Chris Linton)  Trap  NCS - Copyright Free Music_1729787541192.mp3" data-title="Fearless pt.II">Fearless pt.II</option>
+        <option value="The Local Train - Aaoge Tum Kabhi with lyrics_1729597756399.mp3" data-title="Aaoge Tum Kabhi">Aaoge Tum Kabhi</option>
+        <option value="Elley Duhé - Middle of the Night (Lyrics).mp3" data-title="Middle of the Night">Middle of the Night</option>
+        <option value="Warriyo - Mortals (feat. Laura Brehm) (Lyrics)_1722686832267.mp3" data-title="Warriyo - Mortals">Warriyo - Mortals</option>
+        <option value="Tokyo Drift Temperature[REMIX] _ Fast And Furious 8 (Final Battle) (128K).mp3" data-title="Tokyo Drift Temperature[REMIX]">Tokyo_Drift-Temperature</option>
+        <option value="The Neighbourhood - Sweater Weather (Lyrics).mp3" data-title="Sweater Weather">Sweater Weather</option>
+        <option value="LYRICAL VIDEO OF SANSKRITI  MANTRA BAND_1714402333592 (1).mp3" data-title="SANSKRITI MANTRA BAND">SANSKRITI MANTRA BAND</option>
+        <option value="INTERWORLD METAMORPHOSIS_1729401838034.mp3" data-title="INTERWORLD-METAMORPHOSIS">METAMORPHOSIS</option>
+        <option value="Ghost - Mary On A Cross (Official Audio)_1729787557633.mp3" data-title="Ghost-Mary On A Cross">Ghost-Mary On A Cross</option>
+        <option value="BLUESSS - LA LA LA LA (OFFICIAL LYRICS VIDEO) (128K).mp3" data-title="BLUESSS-LA LA LA">BLUESSS-LA LA LA</option>
+        <option value="AlexanderRybak-Fairytale(Lyrics) visionWinner2009_678.mp3" data-title="AlexanderRybak-Fairytale">AlexanderRybak-Fairytale</option>
+        <option value="24kGoldn-Mood(Lyrics)ft.IannDiorWhyyoualwaysinamood_757.mp3" data-title="24kGoldn-Mood">24kGoldn-Mood</option>
+        <option value="Egzod & Maestro Chives - Royalty - Bass Boosted (128K).mp3" data-title="Royalty">Royalty</option>
+        <option value="Eternxlkz - SLAY! (Official Audio)_1720140920108.mp3" data-title="Eternxlkz - SLAY!">Eternxlkz - SLAY!</option>
+        <option value="Eternxlkz - JUJALARIM FUNK (Official Audio)_1717977736620 (1) (1).mp3" data-title="Eternxlkz - JUJALARIM PHONK">Eternxlkz-JUJALARIM PHONK</option>
+        <option value="Rauf&Faik-childhood(Officialvideo)_34.mp3" data-title="Rauf&Faik-Childhood">Rauf&Faik-Childhood</option>
+        <option value="Lana Del Rey - Summertime Sadness (Lyrics)_1723630065669.mp3" data-title="Summertime Sadness">Summertime Sadness</option>
+        <option value="NEFFEX - Cold ❄️[Copyright Free] No.60_1729014764447.mp3" data-title="NEFFEX - Cold ❄️">NEFFEX - Cold ❄️</option>
+        <option value="Powfu-deathbed(Lyrics)feat.beabadoobee_117.mp3" data-title="Powfu-deathbed">Powfu-deathbed</option>
+        
+      </select>
+    </div>
+    <!-- Play/Pause Button -->
+
+    <!-- Audio Element -->
+    <audio id="background-audio" loop>
+      <source id="audio-source" src="" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+
   <div class="base">
 
     <a href="https://www.facebook.com/shreejal.twayana.100"><img src="facebook.png" alt="" class="links"></a>
@@ -64,6 +110,7 @@
     var root = document.querySelector(":root")
     var r = document.getElementById("ireset")
     var rootstyle = getComputedStyle(root)
+    var sbg = rootstyle.getPropertyValue("--song")
     var phc = rootstyle.getPropertyValue("--phc")
     var ph = rootstyle.getPropertyValue("--ph")
     var edt = document.getElementById("edit")
@@ -76,6 +123,7 @@
     var cir = document.getElementById("circle");
     const result = document.getElementById('result');
     const startBtn = document.getElementById('start-btn');
+
     var thm = localStorage.getItem("theme");
     if (thm == "dark") {
       body.style.backgroundColor = "#222";
@@ -83,6 +131,7 @@
       edt.style.background = "transparent"
       root.style.setProperty("--ph", "#222")
       root.style.setProperty("--phc", "white")
+      root.style.setProperty("--song", "#333")
       cir.style.left = "37px"
       cimg.src = "full-moon.png";
     } else {
@@ -91,6 +140,7 @@
       edt.style.background = "transparent";
       root.style.setProperty("--ph", "#fff")
       root.style.setProperty("--phc", "black")
+      root.style.setProperty("--song", "#EFEFEF")
       cir.style.left = "5px"
       cimg.src = "sun.png";
     }
@@ -104,6 +154,7 @@
         edt.style.background = "transparent";
         root.style.setProperty("--phc", "black")
         root.style.setProperty("--ph", "#fff")
+        root.style.setProperty("--song", "#EFEFEF")
         localStorage.setItem("theme", "light")
       } else {
         body.style.backgroundColor = "#222";
@@ -113,6 +164,7 @@
         edt.style.background = "transparent"
         root.style.setProperty("--phc", "white")
         root.style.setProperty("--ph", "#222")
+        root.style.setProperty("--song", "#333")
         localStorage.setItem("theme", "dark")
       }
     })
@@ -174,6 +226,86 @@
       };
     } else {
       result.textContent = 'Speech recognition is not supported in this browser.';
+    }
+  </script>
+
+
+  <script>
+    const audioElement = document.getElementById('background-audio');
+    const playPauseBtn = document.getElementById('play-pause-btn');
+    const progressBar = document.getElementById('progress-bar');
+    const currentTimeSpan = document.getElementById('current-time');
+    const totalTimeSpan = document.getElementById('total-time');
+    const selectElement = document.getElementById('song-select');
+
+    // Load last played song from localStorage on page load
+    window.onload = () => {
+      const savedSong = localStorage.getItem('lastPlayedSong');
+      const savedTitle = localStorage.getItem('lastPlayedSongTitle');
+
+      if (savedSong && savedTitle) {
+        document.getElementById('audio-source').src = savedSong;
+        document.getElementById('song-title').textContent = "Now Playing: " + savedTitle;
+
+        // Set the dropdown to the saved song
+        [...selectElement.options].forEach((option, index) => {
+          if (option.value === savedSong) selectElement.selectedIndex = index;
+        });
+
+        audioElement.load();
+        playPauseBtn.textContent = "▶";
+      }
+    };
+
+    function changeSong() {
+      const selectedOption = selectElement.options[selectElement.selectedIndex];
+      document.getElementById('audio-source').src = selectedOption.value;
+      document.getElementById('song-title').textContent = "Now Playing: " + selectedOption.getAttribute('data-title');
+
+      audioElement.load();
+      audioElement.play();
+      playPauseBtn.textContent = "❚❚";
+
+      // Save song selection to localStorage
+      localStorage.setItem('lastPlayedSong', selectedOption.value);
+      localStorage.setItem('lastPlayedSongTitle', selectedOption.getAttribute('data-title'));
+    }
+
+    function togglePlayPause() {
+      if (audioElement.paused) {
+        audioElement.play();
+        playPauseBtn.textContent = "❚❚";
+      } else {
+        audioElement.pause();
+        playPauseBtn.textContent = "▶";
+      }
+    }
+
+    // Update progress bar and time display
+    audioElement.addEventListener('timeupdate', () => {
+      const { currentTime, duration } = audioElement;
+      if (!isNaN(duration)) {
+        const progressPercent = (currentTime / duration) * 100;
+        progressBar.value = progressPercent;
+        progressBar.style.background = `linear-gradient(to right, red ${progressPercent}%, #ddd ${progressPercent}%)`;
+
+        currentTimeSpan.textContent = formatTime(currentTime);
+        totalTimeSpan.textContent = formatTime(duration);
+      }
+    });
+
+    // Seek in the audio when user changes progress bar
+    progressBar.addEventListener('input', () => {
+      if (!isNaN(audioElement.duration)) {
+        audioElement.currentTime = (progressBar.value / 100) * audioElement.duration;
+      }
+    });
+
+    // Format time in minutes:seconds
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
     }
   </script>
 </body>

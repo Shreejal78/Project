@@ -7,6 +7,7 @@
   --phc: black;
   --ph: white;
   --w: 0;
+  --song:#333;
 }
 
 
@@ -208,7 +209,7 @@ body {
   height: 100px;
   width: 100px;
   transition: 0.75s ease;
-  
+
 }
 
 .base {
@@ -223,20 +224,99 @@ body {
   width: 35px;
 }
 
-#ireset{
+#ireset {
   display: none;
   background: red;
-  font-size:20px;
-  color:white;
+  font-size: 20px;
+  color: white;
   letter-spacing: 2px;
-  text-shadow:1px 0 10px white,
-  2px 0 20px white,
-  3px 0 30px white,
-  4px 0 40px white;
+  text-shadow: 1px 0 10px white,
+    2px 0 20px white,
+    3px 0 30px white,
+    4px 0 40px white;
   font-weight: 400;
   box-shadow: 5px 3px 0 black;
-  height:35px;
-  width:80px;
-  border:2px inherit darkred;
+  height: 35px;
+  width: 80px;
+  border: 2px inherit darkred;
   border-radius: 5px;
+}
+
+/* Basic styling for the range slider */
+#progress-bar {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 60%;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(to right, red 0%, #ddd 0%);
+  cursor: pointer;
+  outline: none;
+}
+
+/* Track styling */
+#progress-bar::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: 4px;
+}
+
+#progress-bar::-moz-range-track {
+  height: 8px;
+  border-radius: 4px;
+}
+
+/* Hide the thumb */
+#progress-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 0;
+  height: 0;
+}
+
+#progress-bar::-moz-range-thumb {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+#progss{
+  margin-left: 35px;
+}
+.music{
+  width:98vw;
+}
+.selection{
+  display: flex;
+  margin-left:13.5vw;
+  padding:20px 0 0 0;
+}
+
+#progss button{
+  border: 0;
+  background: transparent;
+  font-size: 16px;
+  color:var(--phc);
+}
+
+#song-title{
+  text-shadow: 0px 0px 2.5px white,
+  0px 4px 10px red,
+  2px 4px 20px red;
+}
+
+#song-select{
+  border:0;
+  background:var(--song);
+  border-top: 1px solid red;
+  padding:4px;
+  border-right: 2.5px solid red;
+  border-bottom: 1px solid red;
+  border-radius: 10px;
+  font-size: 16px;
+  color:var(--phc);
+  outline:none;
+}
+
+.selection label{
+  padding:4px;
 }
