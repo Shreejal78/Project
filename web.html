@@ -121,7 +121,7 @@
         <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
         <!-- Custom Confirmation / Success Page -->
         <!-- <input type="hidden" name="redirect" value="https://mywebsi.com/thanks.html"> -->
-        <button type="submit">Submit</button>
+        <button type="submit" id="submit">Submit</button>
       </form>
     </div>
   </div>
@@ -145,9 +145,11 @@
     var t = document.getElementById("theme")
     var cir = document.getElementById("circle");
     var close = document.getElementById("close")
+    var submit = document.getElementById("submit");
     var contact = document.getElementById("contactover")
     const result = document.getElementById('result');
     const startBtn = document.getElementById('start-btn');
+
 
     var thm = localStorage.getItem("theme");
     if (thm == "dark") {
@@ -227,7 +229,9 @@
         eye.style.transform = "rotation(" + rotation + "deg)"
       })
     }
-    
+    submit.addEventListener("click",function(){
+      contact.style.display = "none";
+    })
     opn.addEventListener("click",function (){
       contact.style.display = "flex";
     })
