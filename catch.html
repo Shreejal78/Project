@@ -12,6 +12,10 @@
       overflow: hidden;
       background-color: #f0f0f0;
       font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
     }
 
     h1 {
@@ -24,37 +28,27 @@
       position: relative;
       display: block;
       background-color: #87CEEB;
-      margin: 0 0 0 7px;
+      margin: 0;
       padding: 0;
       border: 2px solid #000;
     }
 
-    #score {
-      font-size: 20px;
+    .overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       text-align: center;
-      margin-top: 10px;
-      font-weight: bold;
-      position:absolute;
-      top:150px;
-      left:30px;
+      display: none;
     }
 
     #game-over {
       font-size: 30px;
-      text-align: center;
       color: red;
-      display: none;
-      position: absolute;
-      left: 130px;
-      top: 250px;
+      margin-bottom: 20px;
     }
 
     #restart-btn {
-      position:absolute ;
-      left:130px;
-      bottom:200px;
-      display: none;
-      margin: 0 auto;
       padding: 10px 20px;
       font-size: 18px;
       background-color: #4CAF50;
@@ -80,49 +74,48 @@
 
 <body>
   <div class="home">
-    <a href="games.html"><img src="home.png" alt="" style="height: 35px;width:35px;"></a>
+    <a href="games.html"><img src="home.png" alt="home" style="height: 35px;width:35px;"></a>
   </div>
   <h1>Catch the falling objects!!</h1>
-  <canvas id="gameCanvas" width="370" height="520"></canvas>
-  <div id="score">Score: 0</div>
-  <button id="restart-btn">Restart Game</button>
+  <canvas id="gameCanvas"></canvas>
 
-  <div id="game-over">Game Over! </div>
+  <!-- Centered overlay container for game-over message and restart button -->
+  <div class="overlay" id="gameOverOverlay">
+    <div id="game-over">Game Over!</div>
+    <button id="restart-btn">Restart Game</button>
+  </div>
 
   <script>
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
-    const scoreDisplay = document.getElementById("score");
-    const gameOverDisplay = document.getElementById("game-over");
+    const gameOverOverlay = document.getElementById("gameOverOverlay");
     const restartBtn = document.getElementById("restart-btn");
+    let basket, fallingObjects, score, gameOver;
 
-    let basket;
-    let fallingObjects;
-    let score;
-    let gameOver;
+    function resizeCanvas() {
+      canvas.width = window.innerWidth / 1.1;
+      canvas.height = window.innerHeight /1.4;
+      if (basket) {
+        basket.y = canvas.height - basket.height - 10; // Adjust basket position
+      }
+    }
 
-    // Initialize game state
+    window.addEventListener('resize', resizeCanvas);
+
     function initGame() {
-      basket = {
-        x: canvas.width / 2 - 30,
-        y: canvas.height - 30,
-        width: 70,
-        height: 17,
-      };
+      resizeCanvas();
+      basket = { x: canvas.width / 2 - 30, y: canvas.height - 30, width: 70, height: 17 };
       fallingObjects = [];
       score = 0;
       gameOver = false;
-
-      scoreDisplay.textContent = "Score: 0";
-      gameOverDisplay.style.display = "none";
-      restartBtn.style.display = "none";
+      gameOverOverlay.style.display = "none";
 
       gameLoop();
     }
 
     function createFallingObject() {
-      let size = Math.random() * 20 + 10;
-      let x = Math.random() * (canvas.width - size);
+      const size = Math.random() * 20 + 10;
+      const x = Math.random() * (canvas.width - size);
       fallingObjects.push({ x, y: 0, size, speed: Math.random() * 2 + 2 });
     }
 
@@ -140,32 +133,33 @@
       });
     }
 
+    function drawScore() {
+      ctx.fillStyle = "black";
+      ctx.font = "20px Arial";
+      ctx.fillText("Score: " + score, 10, 30); // Display score in the top-left corner of the canvas
+    }
+
     function updateFallingObjects() {
-      fallingObjects.forEach(obj => {
+      fallingObjects = fallingObjects.filter(obj => {
         obj.y += obj.speed;
 
-        // Check for collision with basket
-        if (
-          obj.y + obj.size > basket.y &&
-          obj.x + obj.size > basket.x &&
-          obj.x < basket.x + basket.width
-        ) {
+        if (obj.y + obj.size > basket.y && obj.x + obj.size > basket.x && obj.x < basket.x + basket.width) {
           score++;
-          scoreDisplay.textContent = "Score: " + score;
-          fallingObjects.splice(fallingObjects.indexOf(obj), 1); // Remove the caught object
+          return false; // Remove object
         }
 
-        // Check if the object falls off the screen
         if (obj.y > canvas.height) {
           gameOver = true;
+          return false; // Remove object
         }
+
+        return true;
       });
     }
 
     function gameLoop() {
       if (gameOver) {
-        gameOverDisplay.style.display = "block";
-        restartBtn.style.display = "block"; // Show restart button
+        gameOverOverlay.style.display = "block";
         return;
       }
 
@@ -173,6 +167,7 @@
 
       drawBasket();
       drawFallingObjects();
+      drawScore(); // Draw the score on the canvas
       updateFallingObjects();
 
       requestAnimationFrame(gameLoop);
@@ -180,36 +175,27 @@
 
     // Move the basket based on the mouse's x position (for desktop)
     canvas.addEventListener("mousemove", function(e) {
-      let rect = canvas.getBoundingClientRect();
-      let mouseX = e.clientX - rect.left;
+      const rect = canvas.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
 
-      // Ensure the basket doesn't move outside the canvas
-      if (mouseX >= 0 && mouseX <= canvas.width - basket.width) {
-        basket.x = mouseX - basket.width / 2;
-      }
+      // Keep the basket within canvas boundaries
+      basket.x = Math.max(0, Math.min(mouseX - basket.width / 2, canvas.width - basket.width));
     });
 
     // Move the basket based on the touch's x position (for mobile)
     canvas.addEventListener("touchmove", function(e) {
-      let rect = canvas.getBoundingClientRect();
-      let touchX = e.touches[0].clientX - rect.left;
+      const rect = canvas.getBoundingClientRect();
+      const touchX = e.touches[0].clientX - rect.left;
 
-      // Ensure the basket doesn't move outside the canvas
-      if (touchX >= 0 && touchX <= canvas.width - basket.width) {
-        basket.x = touchX - basket.width / 5;
-      }
+      // Keep the basket within canvas boundaries
+      basket.x = Math.max(0, Math.min(touchX - basket.width / 2, canvas.width - basket.width));
       e.preventDefault(); // Prevent scrolling while playing
     });
 
-    // Restart the game when the restart button is clicked
-    restartBtn.addEventListener("click", function() {
-      initGame(); // Re-initialize the game state
-    });
+    restartBtn.addEventListener("click", initGame);
 
-    // Generate new falling objects every second
     setInterval(createFallingObject, 1000);
 
-    // Initialize and start the game
     initGame();
   </script>
 </body>

@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="web.css">
   <link rel="website icon" href="wolf-head-amazing-logo-illustration_74472-391.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&display=swap" rel="stylesheet">
   <title>WEBSITE 1101</title>
 </head>
 
@@ -80,18 +83,19 @@
         <option value="Lana Del Rey - Summertime Sadness (Lyrics)_1723630065669.mp3" data-title="Summertime Sadness">Summertime Sadness</option>
         <option value="NEFFEX - Cold ❄️[Copyright Free] No.60_1729014764447.mp3" data-title="NEFFEX - Cold ❄️">NEFFEX - Cold ❄️</option>
         <option value="Powfu-deathbed(Lyrics)feat.beabadoobee_117.mp3" data-title="Powfu-deathbed">Powfu-deathbed</option>
-        
+
       </select>
     </div>
     <!-- Play/Pause Button -->
 
     <!-- Audio Element -->
     <audio id="background-audio" loop>
-      <source id="audio-source" src="" type="audio/mpeg">
-      Your browser does not support the audio element.
+      <source id="audio-source" src="" type="audio/mpeg"> browser does not support
     </audio>
   </div>
-
+  <div id="infous">
+    <button id="contxtopn">Contact Us</button>
+  </div>
 
   <div class="base">
 
@@ -100,15 +104,34 @@
     <a href="https://www.instagram.com/shreejal.twayana?igsh=NHRkMzF3ZGhmYWdk" target="_blank"><img src="instagram.png" alt="" class="links"></a>
     <a href="calculator.html" target="_blank"><img src="calculator.png" alt="" class="links"></a>
     <a href="games.html" target="_blank"><img src="joystick.png" alt="" class="links"></a>
-
   </div>
-
+  
+  <div id="contactover">
+    <div class="contactus">
+      <button id="close" type="button">×</button>
+      <p id="contop">Contact Us</p>
+      <form action="https://api.web3forms.com/submit" method="POST" id="contact">
+        <!-- Replace with your Access Key -->
+        <input type="hidden" name="access_key" value="4943a478-dbcb-4478-88c4-e8dc847175ae">
+        <!-- Form Inputs. Each input must have a name="" attribute -->
+        <input type="text" placeholder="Name" name="name" required>
+        <input type="email" placeholder="Email" id="email" name="email" required>
+        <textarea name="message" placeholder="Message Here!" required style="height:60px;resize: none;padding: 10px;"></textarea>
+        <!-- Honeypot Spam Protection -->
+        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+        <!-- Custom Confirmation / Success Page -->
+        <!-- <input type="hidden" name="redirect" value="https://mywebsi.com/thanks.html"> -->
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
 
   </div>
   <script>
     var body = document.getElementById("body")
     var root = document.querySelector(":root")
     var r = document.getElementById("ireset")
+    var opn = document.getElementById("contxtopn");
     var rootstyle = getComputedStyle(root)
     var sbg = rootstyle.getPropertyValue("--song")
     var phc = rootstyle.getPropertyValue("--phc")
@@ -121,6 +144,8 @@
     var sw = document.getElementById("sw")
     var t = document.getElementById("theme")
     var cir = document.getElementById("circle");
+    var close = document.getElementById("close")
+    var contact = document.getElementById("contactover")
     const result = document.getElementById('result');
     const startBtn = document.getElementById('start-btn');
 
@@ -189,8 +214,9 @@
     edt.addEventListener("focusout", function() {
       edt.value = ""
     })
-    document.querySelector("body").addEventListener("mousemove", eyeball());
 
+    document.querySelector("body").addEventListener("mousemove", eyeball());
+    
     function eyeball() {
       const eye = document.querySelectorAll(".eye")
       eye.forEach(function(eye) {
@@ -201,10 +227,22 @@
         eye.style.transform = "rotation(" + rotation + "deg)"
       })
     }
+    
+    opn.addEventListener("click",function (){
+      contact.style.display = "flex";
+    })
+    close.addEventListener("click",function(){
+      contact.style.display = "none"
+    })
 
     function removeimg() {
       img.src = ""
       r.style.display = "none"
+      sw.value = "175";
+      sh.value = "175";
+      img.style.height = "100px"
+      img.style.width = "100px"
+      img.style.borderRadius = "0"
     }
     if ('webkitSpeechRecognition' in window) {
       const recognition = new webkitSpeechRecognition();
@@ -238,21 +276,25 @@
     const totalTimeSpan = document.getElementById('total-time');
     const selectElement = document.getElementById('song-select');
 
-    // Load last played song from localStorage on page load
     window.onload = () => {
       const savedSong = localStorage.getItem('lastPlayedSong');
       const savedTitle = localStorage.getItem('lastPlayedSongTitle');
+      const savedTime = localStorage.getItem('lastPlayedTime');
 
       if (savedSong && savedTitle) {
         document.getElementById('audio-source').src = savedSong;
         document.getElementById('song-title').textContent = "Now Playing: " + savedTitle;
 
-        // Set the dropdown to the saved song
-        [...selectElement.options].forEach((option, index) => {
+      [...selectElement.options].forEach((option, index) => {
           if (option.value === savedSong) selectElement.selectedIndex = index;
         });
 
         audioElement.load();
+
+        if (savedTime) {
+          audioElement.currentTime = parseFloat(savedTime); // Start from saved time
+        }
+
         playPauseBtn.textContent = "▶";
       }
     };
@@ -266,7 +308,6 @@
       audioElement.play();
       playPauseBtn.textContent = "❚❚";
 
-      // Save song selection to localStorage
       localStorage.setItem('lastPlayedSong', selectedOption.value);
       localStorage.setItem('lastPlayedSongTitle', selectedOption.getAttribute('data-title'));
     }
@@ -281,7 +322,6 @@
       }
     }
 
-    // Update progress bar and time display
     audioElement.addEventListener('timeupdate', () => {
       const { currentTime, duration } = audioElement;
       if (!isNaN(duration)) {
@@ -291,22 +331,39 @@
 
         currentTimeSpan.textContent = formatTime(currentTime);
         totalTimeSpan.textContent = formatTime(duration);
+
+        // Save the current playback time in localStorage
+        localStorage.setItem('lastPlayedTime', currentTime);
       }
     });
 
-    // Seek in the audio when user changes progress bar
     progressBar.addEventListener('input', () => {
       if (!isNaN(audioElement.duration)) {
         audioElement.currentTime = (progressBar.value / 100) * audioElement.duration;
       }
     });
 
-    // Format time in minutes:seconds
     function formatTime(seconds) {
       const minutes = Math.floor(seconds / 60);
       const secs = Math.floor(seconds % 60);
       return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
     }
+
+    audioElement.addEventListener('ended', () => {
+      playNextSong();
+    });
+
+    function playNextSong() {
+      const currentIndex = selectElement.selectedIndex;
+      const nextIndex = (currentIndex + 1) % selectElement.options.length;
+      selectElement.selectedIndex = nextIndex;
+      changeSong();
+    }
+
+    // Save current time when the page is being closed or refreshed
+    window.addEventListener('beforeunload', () => {
+      localStorage.setItem('lastPlayedTime', audioElement.currentTime);
+    });
   </script>
 </body>
 

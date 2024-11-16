@@ -37,6 +37,7 @@
 
     .board {
       display: grid;
+      background:black;
       grid-template-columns: repeat(3, 100px);
       grid-template-rows: repeat(3, 100px);
       gap: 5px;
@@ -45,6 +46,8 @@
     .cell {
       background-color: #61dafb;
       color: black;
+      text-shadow: 2px 2.5px 3.5px black,
+      0 0 10px darkgrey;
       width: 100px;
       height: 100px;
       display: flex;
@@ -65,14 +68,18 @@
     }
 
     #message {
+      text-shadow: 0 0 10px white,
+      0 0 20px whitesmoke,
+      0 0 30px ghostwhite;
       margin-bottom: 10px;
     }
 
     button {
       padding: 10px 20px;
-      background-color: #61dafb;
+      background-color: limegreen;
       border: none;
-      color: black;
+      color: white;
+      text-shadow: 2px 3.5px 5px greenyellow;
       font-size: 16px;
       cursor: pointer;
       border-radius: 5px;
@@ -135,7 +142,7 @@
   [2, 4, 6]
 ];
 
-    const winningMessage = () => `Player "${currentPlayer}" has won!`;
+    const winningMessage = () => `Player '${currentPlayer}' has won!`;
     const drawMessage = () => `It's a draw!`;
     const currentPlayerTurn = () => `Player ${currentPlayer}'s turn`;
 
@@ -190,7 +197,7 @@
 
     function handleRestartGame() {
       gameActive = true;
-      currentPlayer = '0';
+      currentPlayer = 'O';
       gameState = ['', '', '', '', '', '', '', '', ''];
       message.textContent = currentPlayerTurn();
       cells.forEach(cell => (cell.textContent = ''));
