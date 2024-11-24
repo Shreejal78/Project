@@ -6,18 +6,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="web.css">
   <link rel="website icon" href="wolf-head-amazing-logo-illustration_74472-391.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&display=swap" rel="stylesheet">
   <title>WEBSITE 1101</title>
 </head>
 
 <body id="body">
   <div class="top">
-    <marquee direction="left" style="font-size: 30px;">
+    <marquee direction="left" style="font-size: 30px;margin-top: 5px;">
       <p id="title"><b><i>WELCOME TO MY WEB .🇳🇵</i></b></p>
     </marquee>
+    <div class="bar">
+      <button type="button" id="button" onclick="pop()"><img src="hamburger.png" alt="hamburger.png" style="height:35px; width:35px;"></button>
+    </div>
   </div>
+  <div id="pop">
+    <div class="poplink">
+      <a href="web.html"><img src="home.png" alt="home.png">
+            <p>Home</p>
+      </a>
+    </div>
+    <a href="games.html"><img src="joystick.png" alt="" />
+      <p>Games</p>
+    </a>
+    <a href="draw.html"><img src="drawing.png" alt="">
+      <p>Paints</p>
+    </a>
+    <a href="calculator.html" target="_blank"><img src="calculator.png" alt="">
+      <p>Calculator</p>
+    </a>
+  </div>
+  <div id="backpop"></div>
   <div class="container">
     <img src="" alt="" id="image">
     <button onclick="removeimg()" id="ireset">Reset</button>
@@ -65,6 +85,7 @@
       <select id="song-select" onchange="changeSong()">
         <option value="Montagem Coral [ Phonk ] estátua de solo loving_1729795211883.mp3" data-title="Montagem Coral[Phonk]">Montagem Coral[Phonk]</option>
         <option value="Lost Sky - Fearless pt.II (feat. Chris Linton)  Trap  NCS - Copyright Free Music_1729787541192.mp3" data-title="Fearless pt.II">Fearless pt.II</option>
+        <option value="Chaal chal tu apni me tujhe pehchan lunga (Lyrics)  Tu hai kahan  AUR_1716746327590 (1).mp3" data-title="AUR-Tu hai Kahan">AUR-Tu hai Kahan</option>
         <option value="The Local Train - Aaoge Tum Kabhi with lyrics_1729597756399.mp3" data-title="Aaoge Tum Kabhi">Aaoge Tum Kabhi</option>
         <option value="Elley Duhé - Middle of the Night (Lyrics).mp3" data-title="Middle of the Night">Middle of the Night</option>
         <option value="Warriyo - Mortals (feat. Laura Brehm) (Lyrics)_1722686832267.mp3" data-title="Warriyo - Mortals">Warriyo - Mortals</option>
@@ -102,10 +123,9 @@
     <a href="https://www.facebook.com/shreejal.twayana.100" target="_blank"><img src="facebook.png" alt="" class="links"></a>
     <a href="https://youtube.com/@lggamer-lg2sd?si=aAUf6zz8gwkf_DOA" target="_blank"><img src="youtube.png" alt="" class="links"></a>
     <a href="https://www.instagram.com/shreejal.twayana?igsh=NHRkMzF3ZGhmYWdk" target="_blank"><img src="instagram.png" alt="" class="links"></a>
-    <a href="calculator.html" target="_blank"><img src="calculator.png" alt="" class="links"></a>
-    <a href="games.html" target="_blank"><img src="joystick.png" alt="" class="links"></a>
+    <a href="https://github.com/Shreejal78" target="_blank"><img src="github.png" alt="" class="links"></a>
   </div>
-  
+
   <div id="contactover">
     <div class="contactus">
       <button id="close" type="button">×</button>
@@ -140,16 +160,15 @@
     var img = document.getElementById("image")
     var cimg = document.getElementById("cimg")
     var isrc = document.getElementById("isrc")
+    var submit = document.getElementById("submit")
     var sh = document.getElementById("sh")
     var sw = document.getElementById("sw")
     var t = document.getElementById("theme")
     var cir = document.getElementById("circle");
     var close = document.getElementById("close")
-    var submit = document.getElementById("submit");
     var contact = document.getElementById("contactover")
     const result = document.getElementById('result');
     const startBtn = document.getElementById('start-btn');
-
 
     var thm = localStorage.getItem("theme");
     if (thm == "dark") {
@@ -166,7 +185,7 @@
       body.style.color = "black";
       edt.style.background = "transparent";
       root.style.setProperty("--ph", "#fff")
-      root.style.setProperty("--phc", "black")
+      root.style.setProperty("--phc", "#333")
       root.style.setProperty("--song", "#EFEFEF")
       cir.style.left = "5px"
       cimg.src = "sun.png";
@@ -179,7 +198,7 @@
         cir.style.left = "5px";
         cimg.src = "sun.png"
         edt.style.background = "transparent";
-        root.style.setProperty("--phc", "black")
+        root.style.setProperty("--phc", "#333")
         root.style.setProperty("--ph", "#fff")
         root.style.setProperty("--song", "#EFEFEF")
         localStorage.setItem("theme", "light")
@@ -195,6 +214,26 @@
         localStorage.setItem("theme", "dark")
       }
     })
+    var p = document.getElementById("pop");
+    var bp = document.getElementById("backpop")
+
+    function pop() {
+      if (p.style.left == "-8rem") {
+        p.style.left = "0rem";
+        bp.style.display = "block";
+        body.style.overflow = "hidden";
+      } else {
+        bp.style.display = "hidden";
+        p.style.left = "-8rem"
+        body.style.overflow = "visible"
+      }
+    }
+    bp.addEventListener("click", () => {
+      bp.style.display = "none";
+      body.style.overflow = "visible";
+      p.style.left = "-8rem";
+    })
+
     isrc.addEventListener("change", function() {
       img.src = URL.createObjectURL(isrc.files[0])
       if (img.src != "") {
@@ -218,7 +257,7 @@
     })
 
     document.querySelector("body").addEventListener("mousemove", eyeball());
-    
+
     function eyeball() {
       const eye = document.querySelectorAll(".eye")
       eye.forEach(function(eye) {
@@ -229,13 +268,14 @@
         eye.style.transform = "rotation(" + rotation + "deg)"
       })
     }
-    submit.addEventListener("click",function(){
+
+    submit.addEventListener("click", function() {
       contact.style.display = "none";
     })
-    opn.addEventListener("click",function (){
+    opn.addEventListener("click", function() {
       contact.style.display = "flex";
     })
-    close.addEventListener("click",function(){
+    close.addEventListener("click", function() {
       contact.style.display = "none"
     })
 
@@ -269,6 +309,55 @@
     } else {
       result.textContent = 'Speech recognition is not supported in this browser.';
     }
+
+    function saveImage() {
+      const imgElement = document.getElementById("image");
+
+      if (!imgElement.src) {
+        alert("Please upload and edit an image before saving!");
+        return;
+      }
+
+      // Create a temporary canvas to draw the image
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      // Set canvas size to the image size
+      const width = imgElement.width;
+      const height = imgElement.height;
+      const borderRadius = parseInt(window.getComputedStyle(imgElement).borderRadius, 10);
+
+      canvas.width = width;
+      canvas.height = height;
+
+      // Apply border radius and draw the image
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.beginPath();
+      ctx.moveTo(borderRadius, 0);
+      ctx.lineTo(width - borderRadius, 0);
+      ctx.quadraticCurveTo(width, 0, width, borderRadius);
+      ctx.lineTo(width, height - borderRadius);
+      ctx.quadraticCurveTo(width, height, width - borderRadius, height);
+      ctx.lineTo(borderRadius, height);
+      ctx.quadraticCurveTo(0, height, 0, height - borderRadius);
+      ctx.lineTo(0, borderRadius);
+      ctx.quadraticCurveTo(0, 0, borderRadius, 0);
+      ctx.closePath();
+      ctx.clip();
+
+      const img = new Image();
+      img.src = imgElement.src;
+
+      img.onload = function() {
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // Generate a downloadable link
+        const link = document.createElement("a");
+        link.download = "edited_image.png"; // Set the file name
+        link.href = canvas.toDataURL("image/png"); // Convert canvas to a data URL
+        link.click(); // Trigger the download
+      };
+    }
   </script>
 
 
@@ -279,7 +368,6 @@
     const currentTimeSpan = document.getElementById('current-time');
     const totalTimeSpan = document.getElementById('total-time');
     const selectElement = document.getElementById('song-select');
-
     window.onload = () => {
       const savedSong = localStorage.getItem('lastPlayedSong');
       const savedTitle = localStorage.getItem('lastPlayedSongTitle');

@@ -4,7 +4,7 @@
 }
 
 :root {
-  --phc: black;
+  --phc: #333;
   --ph: white;
   --w: 0;
   --song: #333;
@@ -83,6 +83,7 @@ body {
   flex-direction: column;
   gap: 40px;
   justify-content: center;
+  overflow:visible;
   align-items: center
 }
 
@@ -101,6 +102,62 @@ body {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 
 }
+
+.bar {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  padding:7px;
+}
+
+#button {
+  background: transparent;
+  border: 0;
+  margin: 0;
+  padding: 5px;
+}
+
+#backpop {
+  position: fixed;
+  display:none;
+  background: #ffffff12;
+  backdrop-filter: blur(7px);
+  z-index: 19;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+}
+#pop img{
+  height:35px;
+  padding:5px;
+  width:35px;
+}
+#pop a{
+  display: flex;
+  margin-top:15px;
+  text-decoration: none;
+  color:var(--ph);
+  
+}
+#pop {
+  position: fixed;
+  background: var(--phc);
+  filter: brightness(110%);
+  color: var(--ph);
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  padding:15px;
+  left: -8rem;
+  width: 8rem;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  z-index: 20;
+  transition: 0.5s ease-in-out;
+}
+
 
 .box .eye::before {
   content: '';
@@ -231,7 +288,7 @@ body {
 #progress-bar {
   -webkit-appearance: none;
   appearance: none;
-  width: 60%;
+  width: 200px;
   height: 8px;
   border-radius: 4px;
   background: linear-gradient(to right, red 0%, #ddd 0%);
@@ -334,12 +391,12 @@ body {
   color: white;
   background: linear-gradient(to right, #FF1717, #D945FF);
   border-radius: 25px;
-  border:0;
+  border: 0;
   border-bottom: 3px solid mintcream;
   border-right: 3px solid mintcream;
   letter-spacing: 2px;
-  box-shadow:0 0px 5px #FFFFFF,
-  0 2px 20px #FF1FD7,
+  box-shadow: 0 0px 5px #FFFFFF,
+    0 2px 20px #FF1FD7,
     0px 3px 25px #FF08D3;
   user-select: none;
 }
@@ -405,10 +462,9 @@ textarea:focus {
 
 #contop {
   text-shadow: 0 0 1px white,
-  0 0 2px white;
+    0 0 2px white;
   text-align: center;
   font-size: 1.5rem;
   line-height: 2rem;
   font-weight: 700;
 }
-

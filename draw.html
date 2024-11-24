@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Drawing Canvas</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #222;
+      color: white;
+    }
+
+    .drawing-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .drawing-tools {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    canvas {
+      border: 4px solid #5A4242;
+      background: #fff;
+      touch-action: none;
+    }
+
+    h1 {
+      text-shadow: 0 0 10px white,
+        0 0 20px whitesmoke;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      /* Remove default styling for WebKit browsers */
+      appearance: none;
+      /* Remove default styling for other browsers */
+      width: 150px;
+      height: 10px;
+      border-radius: 5px;
+      background: linear-gradient(to right, red, yellow, green);
+      outline: none;
+      /* Remove focus outline */
+      transition: background 0.3s ease;
+    }
+
+    /* Style the thumb (slider knob) */
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      /* Remove default styling */
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: white;
+      border: 2px solid crimson;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+      /* Enlarge on hover */
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: white;
+      border: 2px solid crimson;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-ms-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: white;
+      border: 2px solid crimson;
+      cursor: pointer;
+    }
+
+    input[type="color"]:hover {
+      transform: scale(1.05);
+    }
+
+    #resizeCanvas {
+      width: 100px;
+      padding: 10px;
+      border: 1px solid #FF0303;
+      border-radius: 25px;
+      text-shadow: 0 0 10px red;
+      background: linear-gradient(to right, #A043FF, #FF7272);
+      font-weight: 900;
+      font-size: 1rem;
+    }
+
+    button:hover {
+      transition: 0.2s ease-in-out;
+      transform: rotate(-10deg);
+    }
+
+    button {
+      background: linear-gradient(to right, crimson, blue);
+      color: white;
+      border: 2px solid #ff0000;
+      text-shadow: 0 0 10px white,
+        0 0 20px white;
+      height: 2.5rem;
+      font-size: 1rem;
+      padding: 0.5rem;
+      font-weight: 700;
+      width: 4rem;
+      border-radius: 1rem;
+    }
+
+    input[type="color"] {
+      -webkit-appearance: none;
+      /* For WebKit browsers (e.g., Chrome, Safari) */
+      appearance: none;
+      /* For other browsers */
+      border: none;
+      /* Remove border */
+      width: 40px;
+      /* Set width */
+      height: 40px;
+      /* Set height */
+      cursor: pointer;
+      /* Add a pointer cursor for interactivity */
+      background-color: transparent;
+      /* Ensure the background is transparent */
+      box-shadow: none;
+      /* Remove any shadow for a flat appearance */
+      outline: none;
+      /* Remove focus outline */
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      /* Add hover animation */
+    }
+    .home {
+      margin: 10px;
+      padding: 7px;
+      border: 2px solid black;
+      border-radius: 50%;
+      max-width: fit-content;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="home">
+    <a href="web.html">
+      <img src="home.png" alt="" style="height: 35px;width:35px;">
+    </a>
+  </div>
+  <h1>Draw Here</h1>
+  <div class="drawing-container">
+    <canvas id="drawingCanvas"></canvas>
+  </div>
+  <div class="drawing-tools">
+    <label for="colorPicker">Pen Color:</label>
+    <input type="color" id="colorPicker" value="#000000">
+    <label for="penSize">Size:</label>
+    <input type="range" id="penSize" min="1" max="20" value="5">
+    <button id="eraser">Eraser</button>
+    <button id="fillCanvas">Fill</button>
+    <button id="clearCanvas">Clear</button>
+    <button id="saveDrawing">Save</button>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('drawingCanvas');
+    const ctx = canvas.getContext('2d');
+    const colorPicker = document.getElementById('colorPicker');
+    const penSize = document.getElementById('penSize');
+    const clearCanvas = document.getElementById('clearCanvas');
+    const saveDrawing = document.getElementById('saveDrawing');
+    const eraser = document.getElementById('eraser');
+    const fillCanvas = document.getElementById('fillCanvas');
+    let isDrawing = false;
+    let lastX = 0;
+    let lastY = 0;
+    let isEraser = false;
+
+    // Function to resize canvas to 90% width and 50% height of the screen
+    function resizeCanvas() {
+      canvas.width = window.innerWidth * 0.9;
+      canvas.height = window.innerHeight * 0.5;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // Initialize canvas context properties
+    ctx.strokeStyle = colorPicker.value;
+    ctx.lineWidth = penSize.value;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    let points = []; // Points for the current stroke
+
+    // Start drawing
+    const startDrawing = (x, y) => {
+      isDrawing = true;
+      [lastX, lastY] = [x, y]; // Initialize the starting position
+    };
+
+    // Stop drawing and finalize the stroke
+    const stopDrawing = () => {
+      if (!isDrawing) return;
+
+      // Finalize the stroke on the canvas
+      if (points.length > 1) {
+        ctx.beginPath();
+        ctx.lineWidth = parseInt(penSize.value, 10);
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.strokeStyle = isEraser ? '#fff' : colorPicker.value;
+
+        ctx.moveTo(points[0].x, points[0].y);
+        for (let i = 1; i < points.length - 1; i++) {
+          const midPoint = {
+            x: (points[i].x + points[i + 1].x) / 2,
+            y: (points[i].y + points[i + 1].y) / 2,
+          };
+          ctx.quadraticCurveTo(points[i].x, points[i].y, midPoint.x, midPoint.y);
+        }
+        ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
+        ctx.stroke();
+      }
+
+      // Reset the points array for the next stroke
+      points = [];
+      isDrawing = false;
+    };
+
+    const draw = (x, y) => {
+      if (!isDrawing) return;
+
+      // Draw circles at the current position
+      ctx.beginPath();
+      ctx.arc(x, y, parseInt(penSize.value, 10) / 2, 0, Math.PI * 2);
+      ctx.fillStyle = isEraser ? '#fff' : colorPicker.value;
+      ctx.fill();
+
+      // Interpolate points between the last position and the current position
+      const dx = x - lastX;
+      const dy = y - lastY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      const steps = Math.ceil(distance / (parseInt(penSize.value, 10) / 2));
+
+      for (let i = 1; i < steps; i++) {
+        const interpolatedX = lastX + (dx * i) / steps;
+        const interpolatedY = lastY + (dy * i) / steps;
+
+        ctx.beginPath();
+        ctx.arc(interpolatedX, interpolatedY, parseInt(penSize.value, 10) / 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Update the last position
+  [lastX, lastY] = [x, y];
+    };
+    // Mouse events
+    canvas.addEventListener('mousedown', (e) => startDrawing(e.offsetX, e.offsetY));
+    canvas.addEventListener('mousemove', (e) => draw(e.offsetX, e.offsetY));
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseout', stopDrawing);
+
+    // Touch events
+    canvas.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      startDrawing(touch.clientX - rect.left, touch.clientY - rect.top);
+    });
+
+    canvas.addEventListener('touchmove', (e) => {
+      const touch = e.touches[0];
+      const rect = canvas.getBoundingClientRect();
+      draw(touch.clientX - rect.left, touch.clientY - rect.top);
+      e.preventDefault();
+    });
+
+    canvas.addEventListener('touchend', stopDrawing);
+
+    // Clear canvas
+    clearCanvas.addEventListener('click', () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
+    saveDrawing.addEventListener('click', () => {
+      const link = document.createElement('a');
+      const nam = prompt("Enter the File Name??")
+      if (nam == null) {
+        return;
+      }
+      link.download = nam + '.';
+      link.href = canvas.toDataURL();
+      link.click();
+    });
+
+    // Toggle eraser
+    eraser.addEventListener('click', () => {
+      isEraser = !isEraser;
+      eraser.textContent = isEraser ? 'Pen' : 'Eraser';
+      ctx.globalCompositeOperation = isEraser ? 'destination-out' : 'source-over';
+    });
+
+    // Fill canvas
+    fillCanvas.addEventListener('click', () => {
+      ctx.fillStyle = colorPicker.value;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    });
+
+    // Adjust canvas on load and resize
+    window.addEventListener('load', resizeCanvas);
+    window.addEventListener('resize', resizeCanvas);
+  </script>
+</body>
+
+</html>
