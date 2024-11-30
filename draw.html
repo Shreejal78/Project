@@ -159,7 +159,7 @@
 
 <body>
   <div class="home">
-    <a href="web.html">
+    <a href="web.html" onclick="closetab()">
       <img src="home.png" alt="" style="height: 35px;width:35px;">
     </a>
   </div>
@@ -212,6 +212,9 @@
       isDrawing = true;
       [lastX, lastY] = [x, y]; // Initialize the starting position
     };
+    function closetab(){
+      window.close()
+    }
 
     // Stop drawing and finalize the stroke
     const stopDrawing = () => {

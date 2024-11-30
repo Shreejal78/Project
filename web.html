@@ -22,20 +22,21 @@
     </div>
   </div>
   <div id="pop">
-    <div class="poplink">
-      <a href="web.html"><img src="home.png" alt="home.png">
-            <p>Home</p>
-      </a>
-    </div>
-    <a href="games.html"><img src="joystick.png" alt="" />
-      <p>Games</p>
+    <a href="web.html"><img src="home.png" alt="home.png">
+      <p>Home</p>
     </a>
-    <a href="draw.html"><img src="drawing.png" alt="">
+    <a href="games.html" target="_blank"><img src="joystick.png" alt="" />
+      <p style="padding:9px 0 0 0;">Games</p>
+    </a>
+    <a href="draw.html" target="_blank"><img src="drawing.png" alt="">
       <p>Paints</p>
     </a>
     <a href="calculator.html" target="_blank"><img src="calculator.png" alt="">
       <p>Calculator</p>
     </a>
+    <div id="theme">
+      <div id="circle"><img src="full-moon.png" alt="" id="cimg" style="height: 30px;width:30px;"></div>
+    </div>
   </div>
   <div id="backpop"></div>
   <div class="container">
@@ -63,9 +64,6 @@
       <div style="display:flex;gap: 50px;">
         <label for="isrc" id="isrclb">Upload Image</label>
         <input type="file" id="isrc">
-        <div id="theme">
-          <div id="circle"><img src="full-moon.png" alt="" id="cimg" style="height: 30px;width:30px;"></div>
-        </div>
       </div>
     </form>
   </div>
@@ -73,12 +71,22 @@
     <marquee direction="left" style="font-size: 14px;">
       <h2 id="song-title">Select a song to play</h2>
     </marquee>
-
-
     <div id="progss">
-      <button id="play-pause-btn" onclick="togglePlayPause()">▶</button>
-      <input type="range" id="progress-bar" value="0" max="100">
-      <span id="current-time">0:00</span> / <span id="total-time">0:00</span>
+      <div id="musictime">
+        <input type="range" id="progress-bar" value="0" max="100">
+        <span id="current-time">0:00</span> / <span id="total-time">0:00</span>
+      </div>
+      <div id="musicbut">
+        <div>
+          <button id="previous-btn" onclick="playPreviousSong()">⏮</button>
+          <button id="play-pause-btn" onclick="togglePlayPause()">▶</button>
+          <button id="next-btn" onclick="playNextSong()">⏭</button>
+        </div>
+        <div>
+
+          <button id="repeat-btn" onclick="toggleRepeat()"></button>
+        </div>
+      </div>
     </div>
     <div class="selection">
       <label for="song-select">Song:</label>
@@ -86,6 +94,7 @@
         <option value="Montagem Coral [ Phonk ] estátua de solo loving_1729795211883.mp3" data-title="Montagem Coral[Phonk]">Montagem Coral[Phonk]</option>
         <option value="Lost Sky - Fearless pt.II (feat. Chris Linton)  Trap  NCS - Copyright Free Music_1729787541192.mp3" data-title="Fearless pt.II">Fearless pt.II</option>
         <option value="Chaal chal tu apni me tujhe pehchan lunga (Lyrics)  Tu hai kahan  AUR_1716746327590 (1).mp3" data-title="AUR-Tu hai Kahan">AUR-Tu hai Kahan</option>
+        <option value="anuv-jain-jo-tum-mere-ho-lyrics-128-ytshorts.savetube.me.mp3" data-title="Anuv-Jo Tum Mere Ho">Anuv-Jo Tum Mere Ho</option>
         <option value="The Local Train - Aaoge Tum Kabhi with lyrics_1729597756399.mp3" data-title="Aaoge Tum Kabhi">Aaoge Tum Kabhi</option>
         <option value="Elley Duhé - Middle of the Night (Lyrics).mp3" data-title="Middle of the Night">Middle of the Night</option>
         <option value="Warriyo - Mortals (feat. Laura Brehm) (Lyrics)_1722686832267.mp3" data-title="Warriyo - Mortals">Warriyo - Mortals</option>
@@ -104,13 +113,14 @@
         <option value="Lana Del Rey - Summertime Sadness (Lyrics)_1723630065669.mp3" data-title="Summertime Sadness">Summertime Sadness</option>
         <option value="NEFFEX - Cold ❄️[Copyright Free] No.60_1729014764447.mp3" data-title="NEFFEX - Cold ❄️">NEFFEX - Cold ❄️</option>
         <option value="Powfu-deathbed(Lyrics)feat.beabadoobee_117.mp3" data-title="Powfu-deathbed">Powfu-deathbed</option>
+        <option value="Marshmello - Alone (Lyrics) (128K).mp3" data-title="Marshmello - Alone">Marshmello - Alone</option>
 
       </select>
     </div>
     <!-- Play/Pause Button -->
 
     <!-- Audio Element -->
-    <audio id="background-audio" loop>
+    <audio id="background-audio">
       <source id="audio-source" src="" type="audio/mpeg"> browser does not support
     </audio>
   </div>
@@ -178,7 +188,7 @@
       root.style.setProperty("--ph", "#222")
       root.style.setProperty("--phc", "white")
       root.style.setProperty("--song", "#333")
-      cir.style.left = "37px"
+      cir.style.left = "34px"
       cimg.src = "full-moon.png";
     } else {
       body.style.backgroundColor = "white";
@@ -187,7 +197,7 @@
       root.style.setProperty("--ph", "#fff")
       root.style.setProperty("--phc", "#333")
       root.style.setProperty("--song", "#EFEFEF")
-      cir.style.left = "5px"
+      cir.style.left = "0px"
       cimg.src = "sun.png";
     }
     t.addEventListener("click", function() {
@@ -195,7 +205,7 @@
       if (theme == "dark") {
         body.style.backgroundColor = "white";
         body.style.color = "black";
-        cir.style.left = "5px";
+        cir.style.left = "0px";
         cimg.src = "sun.png"
         edt.style.background = "transparent";
         root.style.setProperty("--phc", "#333")
@@ -205,7 +215,7 @@
       } else {
         body.style.backgroundColor = "#222";
         body.style.color = "white";
-        cir.style.left = "37px";
+        cir.style.left = "34px";
         cimg.src = "full-moon.png";
         edt.style.background = "transparent"
         root.style.setProperty("--phc", "white")
@@ -218,20 +228,20 @@
     var bp = document.getElementById("backpop")
 
     function pop() {
-      if (p.style.left == "-8rem") {
+      if (p.style.left == "-9rem") {
         p.style.left = "0rem";
         bp.style.display = "block";
         body.style.overflow = "hidden";
       } else {
         bp.style.display = "hidden";
-        p.style.left = "-8rem"
+        p.style.left = "-9rem"
         body.style.overflow = "visible"
       }
     }
     bp.addEventListener("click", () => {
       bp.style.display = "none";
       body.style.overflow = "visible";
-      p.style.left = "-8rem";
+      p.style.left = "-9rem";
     })
 
     isrc.addEventListener("change", function() {
@@ -283,6 +293,7 @@
       img.src = ""
       r.style.display = "none"
       sw.value = "175";
+      img.style.background = "transparent";
       sh.value = "175";
       img.style.height = "100px"
       img.style.width = "100px"
@@ -359,8 +370,6 @@
       };
     }
   </script>
-
-
   <script>
     const audioElement = document.getElementById('background-audio');
     const playPauseBtn = document.getElementById('play-pause-btn');
@@ -368,6 +377,9 @@
     const currentTimeSpan = document.getElementById('current-time');
     const totalTimeSpan = document.getElementById('total-time');
     const selectElement = document.getElementById('song-select');
+    const repeatBtn = document.getElementById('repeat-btn');
+    let repeatMode = localStorage.getItem("mode"); // "all", "one", "none"
+
     window.onload = () => {
       const savedSong = localStorage.getItem('lastPlayedSong');
       const savedTitle = localStorage.getItem('lastPlayedSongTitle');
@@ -377,19 +389,35 @@
         document.getElementById('audio-source').src = savedSong;
         document.getElementById('song-title').textContent = "Now Playing: " + savedTitle;
 
-      [...selectElement.options].forEach((option, index) => {
+        [...selectElement.options].forEach((option, index) => {
           if (option.value === savedSong) selectElement.selectedIndex = index;
         });
 
         audioElement.load();
 
         if (savedTime) {
-          audioElement.currentTime = parseFloat(savedTime); // Start from saved time
+          audioElement.currentTime = parseFloat(savedTime);
         }
 
         playPauseBtn.textContent = "▶";
       }
+
+      setupMediaSession();
     };
+
+    function playNextSong() {
+      const currentIndex = selectElement.selectedIndex;
+      const nextIndex = (currentIndex + 1) % selectElement.options.length;
+      selectElement.selectedIndex = nextIndex;
+      changeSong();
+    }
+
+    function playPreviousSong() {
+      const currentIndex = selectElement.selectedIndex;
+      const previousIndex = (currentIndex - 1 + selectElement.options.length) % selectElement.options.length;
+      selectElement.selectedIndex = previousIndex;
+      changeSong();
+    }
 
     function changeSong() {
       const selectedOption = selectElement.options[selectElement.selectedIndex];
@@ -402,6 +430,8 @@
 
       localStorage.setItem('lastPlayedSong', selectedOption.value);
       localStorage.setItem('lastPlayedSongTitle', selectedOption.getAttribute('data-title'));
+
+      updateMediaSession(selectedOption.getAttribute('data-title'));
     }
 
     function togglePlayPause() {
@@ -413,9 +443,68 @@
         playPauseBtn.textContent = "▶";
       }
     }
+    toggleRepeat()
+
+    function toggleRepeat() {
+      if (repeatMode === "all") {
+        repeatMode = "one";
+        localStorage.setItem("mode", repeatMode)
+        // Repeat one song
+        repeatBtn.textContent = "🔂";
+      } else if (repeatMode === "one") {
+        repeatMode = "none"; // Sequential play (no repeat)
+        localStorage.setItem("mode", repeatMode)
+        repeatBtn.textContent = "➡";
+      } else {
+        repeatMode = "all"; // Repeat all songs
+        localStorage.setItem("mode", repeatMode)
+        repeatBtn.textContent = "🔁";
+      }
+    }
+
+    audioElement.addEventListener('ended', () => {
+      if (repeatMode === "one") {
+        // Replay the current song
+        audioElement.currentTime = 0;
+        audioElement.play();
+      } else if (repeatMode === "all") {
+        // Play the next song in the playlist
+        playNextSong();
+      } else {
+        const currentIndex = selectElement.selectedIndex;
+        if (currentIndex < selectElement.options.length - 1) {
+          // Move to the next song if sequential play is enabled
+          playNextSong();
+        } else {
+          // Stop playback when the last song finishes and reset to the first song
+          audioElement.currentTime = 0;
+          selectElement.selectedIndex = 0; // Select the first song
+          const selectedOption = selectElement.options[selectElement.selectedIndex];
+          document.getElementById('audio-source').src = selectedOption.value;
+          document.getElementById('song-title').textContent = "Now Playing: " + selectedOption.getAttribute('data-title');
+
+          audioElement.load();
+          playPauseBtn.textContent = "❚❚";
+
+          localStorage.setItem('lastPlayedSong', selectedOption.value);
+          localStorage.setItem('lastPlayedSongTitle', selectedOption.getAttribute('data-title'));
+
+          updateMediaSession(selectedOption.getAttribute('data-title')); // Load and update the selected song
+          playPauseBtn.textContent = "▶"; // Update play button to paused state
+          const { currentTime, duration } = audioElement;
+          const progressPercent = (currentTime / 0) * 100;
+          progressBar.value = 0;
+          progressBar.style.background = "#ddd";
+          currentTimeSpan.textContent = formatTime(0);
+          totalTimeSpan.textContent = formatTime(0);
+          audioElement.pause()
+        }
+      }
+    });
 
     audioElement.addEventListener('timeupdate', () => {
       const { currentTime, duration } = audioElement;
+
       if (!isNaN(duration)) {
         const progressPercent = (currentTime / duration) * 100;
         progressBar.value = progressPercent;
@@ -424,7 +513,6 @@
         currentTimeSpan.textContent = formatTime(currentTime);
         totalTimeSpan.textContent = formatTime(duration);
 
-        // Save the current playback time in localStorage
         localStorage.setItem('lastPlayedTime', currentTime);
       }
     });
@@ -441,21 +529,34 @@
       return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
     }
 
-    audioElement.addEventListener('ended', () => {
-      playNextSong();
-    });
-
-    function playNextSong() {
-      const currentIndex = selectElement.selectedIndex;
-      const nextIndex = (currentIndex + 1) % selectElement.options.length;
-      selectElement.selectedIndex = nextIndex;
-      changeSong();
+    function setupMediaSession() {
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.setActionHandler('play', () => {
+          audioElement.play();
+          playPauseBtn.textContent = "❚❚";
+        });
+        navigator.mediaSession.setActionHandler('pause', () => {
+          audioElement.pause();
+          playPauseBtn.textContent = "▶";
+        });
+        navigator.mediaSession.setActionHandler('nexttrack', playNextSong);
+        navigator.mediaSession.setActionHandler('previoustrack', playPreviousSong);
+        updateMediaSession(localStorage.getItem('lastPlayedSongTitle'));
+      }
     }
 
-    // Save current time when the page is being closed or refreshed
-    window.addEventListener('beforeunload', () => {
-      localStorage.setItem('lastPlayedTime', audioElement.currentTime);
-    });
+    function updateMediaSession(title) {
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: title || "Select a song to play",
+          artist: "Unknown Artist",
+          album: "Unknown Album",
+          artwork: [
+            { src: "music-abstract-with-headphones-horizontal-wallpaper-photo.jpg", sizes: "512x512", type: "image/jpeg" }
+          ]
+        });
+      }
+    }
   </script>
 </body>
 

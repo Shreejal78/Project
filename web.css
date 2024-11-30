@@ -3,6 +3,10 @@
   width: 100%;
 }
 
+* {
+  font-family: Arial, sans-serif;
+}
+
 :root {
   --phc: #333;
   --ph: white;
@@ -83,7 +87,7 @@ body {
   flex-direction: column;
   gap: 40px;
   justify-content: center;
-  overflow:visible;
+  overflow: visible;
   align-items: center
 }
 
@@ -107,7 +111,7 @@ body {
   position: absolute;
   top: 0px;
   left: 0px;
-  padding:7px;
+  padding: 7px;
 }
 
 #button {
@@ -119,7 +123,7 @@ body {
 
 #backpop {
   position: fixed;
-  display:none;
+  display: none;
   background: #ffffff12;
   backdrop-filter: blur(7px);
   z-index: 19;
@@ -128,33 +132,45 @@ body {
   height: 100vh;
   width: 100vw;
 }
-#pop img{
-  height:35px;
-  padding:5px;
-  width:35px;
+
+#pop img {
+  height: 35px;
+  padding: 5px;
+  width: 35px;
 }
-#pop a{
+
+#pop a {
   display: flex;
-  margin-top:15px;
+  margin-top: 15px;
   text-decoration: none;
-  color:var(--ph);
-  
+  text-shadow: 0 0 10px var(--phc);
+  color: var(--phc);
 }
+
+#pop a:hover {
+  transform: translate(25px);
+}
+
 #pop {
   position: fixed;
-  background: var(--phc);
+  background: var(--ph);
   filter: brightness(110%);
-  color: var(--ph);
+  color: var(--phc);
   top: 0;
+  overflow-y: auto;
+  box-shadow: inset 0 0 10px black;
+  font-size: 0.9rem;
+  font-weight: 800;
   display: flex;
   flex-direction: column;
-  padding:15px;
-  left: -8rem;
-  width: 8rem;
+  padding: 15px;
+  left: -9rem;
+  width: 9rem;
   height: 100vh;
   padding: 0;
   margin: 0;
   z-index: 20;
+  overflow-x: none;
   transition: 0.5s ease-in-out;
 }
 
@@ -230,16 +246,17 @@ body {
 
 #theme {
   position: relative;
+  margin: 20px 0 20px 20px;
   height: 40px;
   width: 70px;
-  background: linear-gradient(to right, white, #222);
+  background: linear-gradient(to right, #ECECEC, #222);
   border-radius: 30px;
   box-shadow: 2px 2.5px rgba(0, 0, 0, 0.7);
 }
 
 #circle {
   position: absolute;
-  top: 4.5px;
+  top: 0px;
   height: 27px;
   width: 27px;
   border-radius: 50%;
@@ -322,16 +339,22 @@ body {
 }
 
 #progss {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   margin-left: 35px;
 }
 
 .music {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 98vw;
 }
 
 .selection {
   display: flex;
-  margin-left: 13.5vw;
   padding: 20px 0 0 0;
 }
 
@@ -348,6 +371,30 @@ body {
     2px 4px 20px red;
 }
 
+#musicbut button {
+  width:50%;
+  /* Restrict to the left half */
+  display: flex;
+  justify-content: center;
+  /* Center horizontally in this half */
+  align-items: center;
+  /* Center vertically in this half */
+  /* Full height of container */
+}
+
+#musicbut {
+  display: flex;
+  width:215px;
+  justify-content: space-between;
+  /* Align items to the left */
+  /* Vertically center items */
+  /* Full height for demonstration */
+}
+#musicbut div{
+  display: flex;
+  gap:10px;
+  margin-left:35px;
+}
 #song-select {
   border: 0;
   background: var(--song);
@@ -360,6 +407,7 @@ body {
   color: var(--phc);
   outline: none;
 }
+
 
 .selection label {
   padding: 4px;
