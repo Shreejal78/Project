@@ -22,11 +22,15 @@
 #isrclb {
   position: relative;
   font: inherit;
-  background: linear-gradient(to left, #49C5F6, #FF2AEF);
+  background: linear-gradient(45deg, #49C5F6, #FF2AEF)padding-box,
+    linear-gradient(45deg, #FF4E50, #FF4EAD, #C64EFF, #4E5BFF, #4EC7FF, #FFF74E, #FF4E4E)border-box;
+  border: 2px solid transparent;
+  background-clip: padding-box, border-box;
   box-shadow: 0px 0px 10px cyan,
     0 0 20px cyan,
     0 0 30px cyan,
     0 0 40px cyan;
+  overflow: hidden;
   border: 1px inherit black;
   color: #fff;
   text-shadow: 0px 0px 10px white,
@@ -40,15 +44,17 @@
 }
 
 #isrclb:before {
-  content: "";
+  content: '';
   position: absolute;
-  height: 2px;
-  background: #1AADFF;
-  bottom: 0.7px;
-  left: 1.4px;
-  width: 0;
-  border-radius: 0 0 0 20px;
-  transition: 1s ease-in-out;
+  width: 80px;
+  height: 100%;
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0)30%,
+      rgba(255, 255, 255, .8),
+      rgba(255, 255, 255, 0)70%);
+  top: 0;
+  left: -100px;
+  animation: shine 2.5s infinite;
 }
 
 #title {
@@ -273,9 +279,29 @@ body {
 
 .base {
   display: flex;
-  gap: 25px;
-  padding: 10px;
+  gap: 10px;
+  flex-direction: column;
+  padding: 1px;
   border-radius: 30px;
+}
+
+.contactlink {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+}
+
+.contactlink a {
+  text-decoration: none;
+  color: var(--phc);
+  font: italic;
+  font-weight: 450;
+}
+
+.ownlink {
+  display: flex;
+  gap: 25px;
 }
 
 .links {
@@ -366,13 +392,18 @@ body {
 }
 
 #song-title {
-  text-shadow: 0px 0px 2.5px white,
-    0px 4px 10px red,
-    2px 4px 20px red;
+  text-shadow: 2px 0px 0px var(--phc);
+  background: linear-gradient(transparent, transparent)padding-box,
+    linear-gradient(45deg, red, blue, yellow, green, indigo, white);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: blur(0.4px);
+  background-size: 400%;
+  animation: gradient 6s infinite;
 }
 
 #musicbut button {
-  width:50%;
+  width: 50%;
   /* Restrict to the left half */
   display: flex;
   justify-content: center;
@@ -384,17 +415,19 @@ body {
 
 #musicbut {
   display: flex;
-  width:215px;
+  width: 215px;
   justify-content: space-between;
   /* Align items to the left */
   /* Vertically center items */
   /* Full height for demonstration */
 }
-#musicbut div{
+
+#musicbut div {
   display: flex;
-  gap:10px;
-  margin-left:35px;
+  gap: 10px;
+  margin-left: 35px;
 }
+
 #song-select {
   border: 0;
   background: var(--song);
@@ -435,18 +468,63 @@ body {
   padding: 4px 6px 4px 6px;
   font-size: 25px;
   font-weight: 700;
+  position: relative;
+  overflow: hidden;
   font-family: "Dancing Script", cursive;
   color: white;
-  background: linear-gradient(to right, #FF1717, #D945FF);
-  border-radius: 25px;
+  background: linear-gradient(45deg, #ff0099, #ffe100, #fc0000, #3801ff, #fdfdfe);
+  background-size: 400% 400%;
+  border-radius: 15px;
   border: 0;
-  border-bottom: 3px solid mintcream;
-  border-right: 3px solid mintcream;
+  border-bottom: 1.5px solid mintcream;
+  border-right: 1.5px solid mintcream;
   letter-spacing: 2px;
   box-shadow: 0 0px 5px #FFFFFF,
     0 2px 20px #FF1FD7,
     0px 3px 25px #FF08D3;
   user-select: none;
+  animation: gradient 5s infinite;
+}
+
+/*#contxtopn:before{
+  content: '';
+  position: absolute;
+  width: 100px;
+  height: 100%;
+  background: linear-gradient(120deg,
+    rgba(255, 255, 255, 0)30%,
+    rgba(255, 255, 255, .8),
+    rgba(255, 255, 255, 0)70%);
+    top: 0;
+    left: -100px;
+    animation: shine 5s infinite;
+}*/
+@keyframes shine {
+  0% {
+    left: -100px;
+  }
+
+  35% {
+    left: 100%;
+  }
+
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 #contactover {

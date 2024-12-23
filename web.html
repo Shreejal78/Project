@@ -14,6 +14,9 @@
 
 <body id="body">
   <div class="top">
+    <audio autoplay muted loop>
+      <source src="background-music.mp3" type="audio/mpeg">
+    </audio>
     <marquee direction="left" style="font-size: 30px;margin-top: 5px;">
       <p id="title"><b><i>WELCOME TO MY WEB .🇳🇵</i></b></p>
     </marquee>
@@ -69,7 +72,8 @@
   </div>
   <div class="music">
     <marquee direction="left" style="font-size: 14px;">
-      <h2 id="song-title">Select a song to play</h2>
+      <h2 id="song-title">
+        Select a song to play.</h2>
     </marquee>
     <div id="progss">
       <div id="musictime">
@@ -91,6 +95,8 @@
     <div class="selection">
       <label for="song-select">Song:</label>
       <select id="song-select" onchange="changeSong()">
+        <option value="ogryzek-aura-128-ytshorts.savetube.me.mp3" data-title="Ogryzek - AURA">Ogryzek - AURA</option>
+          <option value="victory-anthem-khushix-lashcurry-prod-by-audiocrackerrbeatz1-official-audio-128-ytshorts.savetube.me.mp3" data-title="Victory - Anthem">Victory - Anthem</option>
         <option value="Montagem Coral [ Phonk ] estátua de solo loving_1729795211883.mp3" data-title="Montagem Coral[Phonk]">Montagem Coral[Phonk]</option>
         <option value="Lost Sky - Fearless pt.II (feat. Chris Linton)  Trap  NCS - Copyright Free Music_1729787541192.mp3" data-title="Fearless pt.II">Fearless pt.II</option>
         <option value="Chaal chal tu apni me tujhe pehchan lunga (Lyrics)  Tu hai kahan  AUR_1716746327590 (1).mp3" data-title="AUR-Tu hai Kahan">AUR-Tu hai Kahan</option>
@@ -129,11 +135,17 @@
   </div>
 
   <div class="base">
+    <div class="ownlink">
+      <a href="https://www.facebook.com/shreejal.twayana.100" target="_blank"><img src="facebook.png" alt="" class="links"></a>
+      <a href="https://youtube.com/@lggamer-lg2sd?si=aAUf6zz8gwkf_DOA" target="_blank"><img src="youtube.png" alt="" class="links"></a>
+      <a href="https://www.instagram.com/shreejal.twayana?igsh=NHRkMzF3ZGhmYWdk" target="_blank"><img src="instagram.png" alt="" class="links"></a>
+      <a href="https://github.com/Shreejal78" target="_blank"><img src="github.png" alt="" class="links"></a>
+    </div>
+    <div class="contactlink">
+      <a href="mailto:shreeejalt1@gmail.com">shreeejalt1@gmail.com</a>
 
-    <a href="https://www.facebook.com/shreejal.twayana.100" target="_blank"><img src="facebook.png" alt="" class="links"></a>
-    <a href="https://youtube.com/@lggamer-lg2sd?si=aAUf6zz8gwkf_DOA" target="_blank"><img src="youtube.png" alt="" class="links"></a>
-    <a href="https://www.instagram.com/shreejal.twayana?igsh=NHRkMzF3ZGhmYWdk" target="_blank"><img src="instagram.png" alt="" class="links"></a>
-    <a href="https://github.com/Shreejal78" target="_blank"><img src="github.png" alt="" class="links"></a>
+      <a href="tel:9767239039">9767239039</a>
+    </div>
   </div>
 
   <div id="contactover">
@@ -512,7 +524,6 @@
 
         currentTimeSpan.textContent = formatTime(currentTime);
         totalTimeSpan.textContent = formatTime(duration);
-
         localStorage.setItem('lastPlayedTime', currentTime);
       }
     });
