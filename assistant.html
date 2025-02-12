@@ -194,8 +194,7 @@
       }
 
       let location = locationWords.join(" ");
-      let apiKey = "3df7bc3d3fca33e8e839e24129b26512"; // Replace with your OpenWeatherMap API key
-      let url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`;
+      let url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=3df7bc3d3fca33e8e839e24129b26512&units=metric`;
 
       try {
         let response = await fetch(url);
@@ -214,7 +213,16 @@
         speak("Error fetching data!");
       }
     }
-
+    document.addEventListener("contextmenu", function (event) {
+    event.preventDefault();
+});
+    document.addEventListener("keydown", function (event) {
+    if (event.key === "F12" || 
+        (event.ctrlKey && event.shiftKey && (event.key === "I" || event.key === "J")) ||
+        (event.ctrlKey && event.key === "U")) {
+        event.preventDefault();
+    }
+});
     function speak(text) {
       const speech = new SpeechSynthesisUtterance(text);
       speech.rate = 1;
