@@ -560,7 +560,8 @@ body {
 
 .contactus button[type="submit"] {
   display: block;
-  width: 100%;
+  width: 80%;
+  align-self: center;
   background-color: rgba(167, 139, 250, 1);
   padding: 0.75rem;
   text-align: center;
@@ -568,6 +569,16 @@ body {
   border: none;
   border-radius: 0.375rem;
   font-weight: 600;
+  letter-spacing: 1.5px;
+  transition: 0.2s ease-in-out;
+}
+
+.contactus button[type="submit"]:hover {
+  box-shadow: 0 0 5px #04E01B,
+    0 0 10px #01C315,
+    0 0 15px #03AA14,
+    0 0 20px #01770D;
+  background: #07FF20;
 }
 
 .contactus input,
@@ -593,4 +604,118 @@ textarea:focus {
   font-size: 1.5rem;
   line-height: 2rem;
   font-weight: 700;
+}
+
+#loader {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  background: #212121;
+  justify-content: center;
+  align-items: center ;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+}
+.glitch {
+  position: relative;
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #fff;
+  letter-spacing: 5px;
+  z-index: 1;
+  animation: shift 1s ease-in-out infinite alternate;
+}
+
+.glitch:before,
+.glitch:after {
+  display: block;
+  content: attr(data-glitch);
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.8;
+}
+
+.glitch:before {
+  animation: glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+  color: black;
+  z-index: -1;
+}
+
+.glitch:after {
+  animation: glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
+  color: rgb(121, 82, 152);
+  z-index: -2;
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+
+  20% {
+    transform: translate(-3px, 3px);
+  }
+
+  40% {
+    transform: translate(-3px, -3px);
+  }
+
+  60% {
+    transform: translate(3px, 3px);
+  }
+
+  80% {
+    transform: translate(3px, -3px);
+  }
+
+  to {
+    transform: translate(0);
+  }
+}
+
+@keyframes shift {
+
+  0%,
+  40%,
+  44%,
+  58%,
+  61%,
+  65%,
+  69%,
+  73%,
+  100% {
+    transform: skewX(0deg);
+  }
+
+  41% {
+    transform: skewX(10deg);
+  }
+
+  42% {
+    transform: skewX(-10deg);
+  }
+
+  59% {
+    transform: skewX(40deg) skewY(10deg);
+  }
+
+  60% {
+    transform: skewX(-40deg) skewY(-10deg);
+  }
+
+  63% {
+    transform: skewX(10deg) skewY(-5deg);
+  }
+
+  70% {
+    transform: skewX(-50deg) skewY(-20deg);
+  }
+
+  71% {
+    transform: skewX(10deg) skewY(-10deg);
+  }
 }

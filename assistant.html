@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Assistant 1101</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      font-family: "Press Start 2P", serif;
+      font-weight: 400;
+      font-style: normal;
+      color: white;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .main {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      flex-direction: column;
+      justify-content: space-around;
+      gap: 50px;
+      overflow-x: none;
+      align-items: center;
+      padding: 10px;
+    }
+
+    #skull {
+      height: 10rem;
+      width: 10rem;
+    }
+
+    #title {
+      font-family: "Press Start 2P", serif;
+      font-weight: 400;
+      font-style: normal;
+      color: white;
+    }
+
+    #search {
+      border: 0;
+      height: 50px;
+      width: 18rem;
+      border-radius: 50px;
+      margin: 0 0 10px 0;
+      background: #363636;
+      font-size: 20px;
+      color: white;
+      padding-left: 5px;
+      outline: 2px solid #686868;
+      transition: 1s linear;
+    }
+
+    #search:focus {
+      outline: 2px solid #E1E1E1;
+    }
+
+    .inpbar {
+      position: relative;
+    }
+
+    #start-btn:active {
+      transform: scale(0.88);
+    }
+
+    #start-btn {
+      position: absolute;
+      height: 45px;
+      width: 45px;
+      top: 4.2px;
+      right: 3.1px;
+      border: 1px solid #242424;
+      align-items: center;
+      background: #5F5F5F;
+      border-radius: 50%;
+    }
+
+    #start-btn img {
+      height: 30px;
+      width: 30px;
+    }
+
+    #result {
+      line-height: 1.8;
+    }
+
+    #watch {
+      color: red;
+      align-self: flex-start;
+      justify-self: start;
+    }
+
+    #load {
+      background: #000;
+      height: 100vh;
+      width: 100vw;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 5;
+    }
+
+    #loader {
+      font-size: 48px;
+      display: inline-block;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      color: #FFF;
+      letter-spacing: 2px;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    #loader::after {
+      content: 'Loading';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #263238;
+      text-shadow: 0 0 2px #FFF, 0 0 1px #FFF, 0 0 1px #FFF;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      box-sizing: border-box;
+      animation: animloader 5s linear infinite;
+    }
+
+    @keyframes animloader {
+      0% {
+        height: 100%;
+      }
+
+      100% {
+        height: 0%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="load">
+    <span id="loader">Loading</span>
+  </div>
+  <div class="main">
+    <div id="watch">00:00:00</div>
+    <h2 id="title" style="margin: 0;color:#ffd700;">Web Assistant</h2>
+    <img src="skull_logo.png" alt="" id="skull">
+    <h6 id="result" style="color:#ffa500">WELCOME</h6>
+    <div class="inpbar">
+      <input type="text" id="search" placeholder="Message">
+      <button id="start-btn"><img src="whitemicrophone.png" alt=""></button>
+    </div>
+  </div>
+  <script>
+    const search = document.getElementById("search");
+    const result = document.getElementById('result');
+    const startBtn = document.getElementById('start-btn');
+
+    function updateClock() {
+      let now = new Date();
+      let hours = now.getHours().toString().padStart(2, '0');
+      let minutes = now.getMinutes().toString().padStart(2, '0');
+      let seconds = now.getSeconds().toString().padStart(2, '0');
+      document.getElementById('watch').textContent = `${hours}:${minutes}:${seconds}`;
+      setTimeout(updateClock, 1000 - now.getMilliseconds());
+    }
+    updateClock();
+
+    async function weather(transcript) {
+      let input = transcript.toLowerCase();
+      let ignoredWords = ["tell", "me", "the", "of", "in", "what", "is", "please", "can", "you", "u", "tells"];
+
+      if (!input.includes("weather")) return;
+
+      let words = input.split(" ").filter(word => !ignoredWords.includes(word));
+      let locationWords = words.filter(word => word !== "weather");
+
+      if (locationWords.length === 0) {
+        result.innerText = "Please specify a location.";
+        speak("Please specify a location.");
+        return;
+      }
+
+      let location = locationWords.join(" ");
+      let apiKey = "3df7bc3d3fca33e8e839e24129b26512"; // Replace with your OpenWeatherMap API key
+      let url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`;
+
+      try {
+        let response = await fetch(url);
+        let data = await response.json();
+
+        if (data.cod === 200) {
+          let resultText = `Weather in ${data.name} is ${data.weather[0].description}. And the Temperature is ${data.main.temp}°Celsius.`;
+          result.innerText = resultText;
+          speak(resultText);
+        } else {
+          result.innerText = "Location not found. Try again!";
+          speak("Location not found. Try again!");
+        }
+      } catch (error) {
+        result.innerText = "Error fetching data!";
+        speak("Error fetching data!");
+      }
+    }
+
+    function speak(text) {
+      const speech = new SpeechSynthesisUtterance(text);
+      speech.rate = 1;
+      speech.volume = 1;
+      window.speechSynthesis.speak(speech);
+    }
+
+    if ('webkitSpeechRecognition' in window) {
+      const recognition = new webkitSpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = 'en-US';
+
+      recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript.trim();
+        result.innerText = transcript;
+        if (transcript.toLowerCase().includes("weather")) {
+          weather(transcript);
+          return;
+        }
+        if (transcript.toLowerCase().includes("hello") || transcript.toLowerCase().includes("hi")) {
+          result.innerText = `${transcript} there, How can i help you today!`
+          speak(`${transcript} there, How can i help you today!`)
+          return;
+        } else if (transcript.toLowerCase() == "how are you") {
+          result.innerText = "I'm all good!! Thanks for asking!!"
+          speak("I'm all good!! Thanks for asking!!")
+          return
+        } else if (transcript.toLowerCase() == "who are you") {
+          result.innerText = "I'm web Assistant! let me know if you want to ask something?!"
+          speak("I'm web Assistant! let me know if you want to ask something?!")
+          return;
+        } else if (transcript.toLowerCase() == "what's your name" || transcript.toLowerCase() == "what is your name") {
+          result.innerText = "I don't have a name till now!"
+          speak("I don't have a name till now!")
+        }
+        if (transcript.toLowerCase().includes("open")) {
+          let websiteName = transcript.substring(4).trim().toLowerCase();
+          if (!websiteName.includes('.')) websiteName += '.com';
+          let url = `https://${websiteName}`;
+          let newWebname = websiteName.slice(0, -3)
+          console.log(newWebname)
+          result.innerText = `Opening ${newWebname}`;
+          speak(`Opening ${newWebname}`);
+          setTimeout(() => { window.open(url, '_blank'); }, 1800);
+        } else {
+          let url = `https://www.google.com/search?q=${encodeURIComponent(transcript)}`;
+          result.innerText = `This is what I've founded on the Internet regarding "${transcript}".`;
+          speak(`This is what I've founded on the Internet regarding "${transcript}".`);
+          setTimeout(() => { window.open(url, "_blank"); }, 3000);
+        }
+      };
+
+      recognition.onerror = function(event) {
+        result.textContent = `${event.error}  ERROR!!`;
+        speak(`Sorry, an error occurred: ${event.error}`);
+      };
+
+      startBtn.onclick = function() {
+        result.textContent = 'Listening...';
+        recognition.start();
+      };
+    } else {
+      result.textContent = 'Speech recognition is not supported in this browser.';
+    }
+
+    search.addEventListener("keydown", async (e) => {
+      if (e.keyCode === 13) {
+        const userInp = search.value.trim();
+        result.innerText = userInp;
+        search.value = "";
+        if (userInp === "") {
+          result.textContent = "WELCOME";
+          return;
+        }
+        if (userInp.toLowerCase().includes("weather")) {
+          await weather(userInp);
+          return;
+        }
+        if (userInp.toLowerCase().includes("hello") || userInp.toLowerCase().includes("hi")) {
+          result.innerText = `${userInp} there, How can i help you today!`
+          speak(`${userInp} there, How can i help you today!`)
+          return;
+        } else if (userInp.toLowerCase() == "how are you") {
+          result.innerText = "I'm all good!! Thanks for asking!!"
+          speak("I'm all good!! Thanks for asking!!")
+          return
+        } else if (userInp.toLowerCase() == "who are you") {
+          result.innerText = "I'm web Assistant! let me know if you want to ask something?!"
+          speak("I'm web Assistant! let me know if you want to ask something?!")
+          return;
+        } else if (userInp.toLowerCase() == "what's your name" || userInp.toLowerCase() == "what is your name") {
+          result.innerText = "I don't have a name till now!"
+          speak("I don't have a name till now!")
+          return;
+        }
+        if (userInp.toLowerCase().includes("open")) {
+          let newInp = userInp.replace(/\bopen\b/gi, "").trim();
+          if (newInp === '') {
+            speak("Please specify what you want to open.");
+            result.innerText = "Please specify what you want to open."
+            return;
+          }
+
+          let websiteName = newInp.toLowerCase().replace(/\s+/g, '');
+          if (!websiteName.includes('.')) websiteName += '.com';
+          const url = `https://${websiteName}`;
+          newWebname = websiteName.slice(0, -3)
+          result.textContent = `Opening ${newWebname}`;
+          speak(`Opening ${newWebname}`);
+          setTimeout(() => { window.open(url, '_blank'); }, 1800);
+          return;
+        }
+
+        let url = `https://www.google.com/search?q=${encodeURIComponent(userInp)}`;
+        result.innerText = `This is what I've founded on the Internet regarding "${userInp}".`;
+        speak(`This is what I've founded on the Internet regarding "${userInp}".`);
+        setTimeout(() => { window.open(url, "_blank"); }, 3000);
+      }
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        search.value = "";
+        result.innerText = "WELCOME BACK!!";
+      }
+    });
+
+    let hasSpoken = false;
+    const observer = new MutationObserver(() => {
+      if (!hasSpoken) {
+        const hours = new Date().getHours();
+        let greeting = (hours < 12) ? "Hello,Good Morning!" : (hours < 18) ? "Hello, Good Afternoon!" : "Hello,Good Evening!";
+        speak(greeting);
+        hasSpoken = true;
+      }
+    });
+
+    observer.observe(document.getElementById('load'), { attributes: true, attributeFilter: ['style'] });
+
+    setTimeout(() => { document.getElementById('load').style.display = 'none'; }, 5000);
+  </script>
+</body>
+
+</html>

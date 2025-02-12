@@ -3,9 +3,10 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="theme-color" content="red">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="web.css">
-  <link rel="website icon" href="wolf-head-amazing-logo-illustration_74472-391.jpg">
+  <link rel="website icon" href="BG Grille.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&display=swap" rel="stylesheet">
@@ -13,15 +14,17 @@
 </head>
 
 <body id="body">
+  <div id="loader">
+    <div data-glitch="Loading..." class="glitch">
+      Loading...
+    </div>
+  </div>
   <div class="top">
-    <audio autoplay muted loop>
-      <source src="background-music.mp3" type="audio/mpeg">
-    </audio>
     <marquee direction="left" style="font-size: 30px;margin-top: 5px;">
       <p id="title"><b><i>WELCOME TO MY WEB .🇳🇵</i></b></p>
     </marquee>
     <div class="bar">
-      <button type="button" id="button" onclick="pop()"><img src="hamburger.png" alt="hamburger.png" style="height:35px; width:35px;"></button>
+      <button type="button" title="Menu" id="button" onclick="pop()"><img src="hamburger.png" alt="hamburger.png" style="height:35px; width:35px;"></button>
     </div>
   </div>
   <div id="pop">
@@ -36,6 +39,9 @@
     </a>
     <a href="calculator.html" target="_blank"><img src="calculator.png" alt="">
       <p>Calculator</p>
+    </a>
+    <a href="assistant.html" target="_blank" id="assis"><img style="border-radius:50px;" src="skull_logo.png" alt="">
+      <p>Assistant</p>
     </a>
     <div id="theme">
       <div id="circle"><img src="full-moon.png" alt="" id="cimg" style="height: 30px;width:30px;"></div>
@@ -93,10 +99,12 @@
       </div>
     </div>
     <div class="selection">
-      <label for="song-select">Song:</label>
       <select id="song-select" onchange="changeSong()">
+        <option value="lady-gaga-bruno-mars-die-with-a-smile-lyrics-128-ytshorts.savetube.me.mp3" data-title="Die With A Smile">Die With A Smile</option>
+        <option value="the-rare-occasions-notion-128-ytshorts.savetube.me.mp3" data-title="Notion">Notion</option>
         <option value="ogryzek-aura-128-ytshorts.savetube.me.mp3" data-title="Ogryzek - AURA">Ogryzek - AURA</option>
-          <option value="victory-anthem-khushix-lashcurry-prod-by-audiocrackerrbeatz1-official-audio-128-ytshorts.savetube.me.mp3" data-title="Victory - Anthem">Victory - Anthem</option>
+        <option value="victory-anthem-khushix-lashcurry-prod-by-audiocrackerrbeatz1-official-audio-128-ytshorts.savetube.me.mp3" data-title="Victory - Anthem">Victory - Anthem</option>
+        <option value="andreas-stone-with-denniz-jamm-black-sunrise-dnb-ncs-copyright-free-music-128-ytshorts.savetube.me.mp3" data-title="Andreas Stone-Black Sunrise">Andreas Stone-Black Sunrise</option>
         <option value="Montagem Coral [ Phonk ] estátua de solo loving_1729795211883.mp3" data-title="Montagem Coral[Phonk]">Montagem Coral[Phonk]</option>
         <option value="Lost Sky - Fearless pt.II (feat. Chris Linton)  Trap  NCS - Copyright Free Music_1729787541192.mp3" data-title="Fearless pt.II">Fearless pt.II</option>
         <option value="Chaal chal tu apni me tujhe pehchan lunga (Lyrics)  Tu hai kahan  AUR_1716746327590 (1).mp3" data-title="AUR-Tu hai Kahan">AUR-Tu hai Kahan</option>
@@ -123,7 +131,6 @@
 
       </select>
     </div>
-    <!-- Play/Pause Button -->
 
     <!-- Audio Element -->
     <audio id="background-audio">
@@ -163,412 +170,11 @@
         <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
         <!-- Custom Confirmation / Success Page -->
         <!-- <input type="hidden" name="redirect" value="https://mywebsi.com/thanks.html"> -->
-        <button type="submit" id="submit">Submit</button>
+        <button type="submit" id="submit">DONE</button>
       </form>
     </div>
   </div>
-
-  </div>
-  <script>
-    var body = document.getElementById("body")
-    var root = document.querySelector(":root")
-    var r = document.getElementById("ireset")
-    var opn = document.getElementById("contxtopn");
-    var rootstyle = getComputedStyle(root)
-    var sbg = rootstyle.getPropertyValue("--song")
-    var phc = rootstyle.getPropertyValue("--phc")
-    var ph = rootstyle.getPropertyValue("--ph")
-    var edt = document.getElementById("edit")
-    var img = document.getElementById("image")
-    var cimg = document.getElementById("cimg")
-    var isrc = document.getElementById("isrc")
-    var submit = document.getElementById("submit")
-    var sh = document.getElementById("sh")
-    var sw = document.getElementById("sw")
-    var t = document.getElementById("theme")
-    var cir = document.getElementById("circle");
-    var close = document.getElementById("close")
-    var contact = document.getElementById("contactover")
-    const result = document.getElementById('result');
-    const startBtn = document.getElementById('start-btn');
-
-    var thm = localStorage.getItem("theme");
-    if (thm == "dark") {
-      body.style.backgroundColor = "#222";
-      body.style.color = "white";
-      edt.style.background = "transparent"
-      root.style.setProperty("--ph", "#222")
-      root.style.setProperty("--phc", "white")
-      root.style.setProperty("--song", "#333")
-      cir.style.left = "34px"
-      cimg.src = "full-moon.png";
-    } else {
-      body.style.backgroundColor = "white";
-      body.style.color = "black";
-      edt.style.background = "transparent";
-      root.style.setProperty("--ph", "#fff")
-      root.style.setProperty("--phc", "#333")
-      root.style.setProperty("--song", "#EFEFEF")
-      cir.style.left = "0px"
-      cimg.src = "sun.png";
-    }
-    t.addEventListener("click", function() {
-      var theme = localStorage.getItem("theme")
-      if (theme == "dark") {
-        body.style.backgroundColor = "white";
-        body.style.color = "black";
-        cir.style.left = "0px";
-        cimg.src = "sun.png"
-        edt.style.background = "transparent";
-        root.style.setProperty("--phc", "#333")
-        root.style.setProperty("--ph", "#fff")
-        root.style.setProperty("--song", "#EFEFEF")
-        localStorage.setItem("theme", "light")
-      } else {
-        body.style.backgroundColor = "#222";
-        body.style.color = "white";
-        cir.style.left = "34px";
-        cimg.src = "full-moon.png";
-        edt.style.background = "transparent"
-        root.style.setProperty("--phc", "white")
-        root.style.setProperty("--ph", "#222")
-        root.style.setProperty("--song", "#333")
-        localStorage.setItem("theme", "dark")
-      }
-    })
-    var p = document.getElementById("pop");
-    var bp = document.getElementById("backpop")
-
-    function pop() {
-      if (p.style.left == "-9rem") {
-        p.style.left = "0rem";
-        bp.style.display = "block";
-        body.style.overflow = "hidden";
-      } else {
-        bp.style.display = "hidden";
-        p.style.left = "-9rem"
-        body.style.overflow = "visible"
-      }
-    }
-    bp.addEventListener("click", () => {
-      bp.style.display = "none";
-      body.style.overflow = "visible";
-      p.style.left = "-9rem";
-    })
-
-    isrc.addEventListener("change", function() {
-      img.src = URL.createObjectURL(isrc.files[0])
-      if (img.src != "") {
-        r.style.display = "block";
-      } else {
-        r.style.display = "none"
-      }
-    })
-    sh.addEventListener("input", function() {
-      img.style.height = sh.value + 'px';
-    })
-    sw.addEventListener("input", function() {
-      img.style.width = sw.value + 'px';
-    })
-    edt.addEventListener("input", function() {
-      img.style.background = edt.value;
-      img.style.borderRadius = edt.value + 'px';
-    })
-    edt.addEventListener("focusout", function() {
-      edt.value = ""
-    })
-
-    document.querySelector("body").addEventListener("mousemove", eyeball());
-
-    function eyeball() {
-      const eye = document.querySelectorAll(".eye")
-      eye.forEach(function(eye) {
-        let x = (eye.getBoundingClientRect().left) + (eye.clientWidth / 2);
-        let y = (eye.getBoundingClientRect().top) + (eye.clientHeight / 2);
-        let radian = Math.atan2(event.pageX - x, event.pageY - y);
-        let rotation = (radian * (180 / Math.PI) * -1) + 270;
-        eye.style.transform = "rotation(" + rotation + "deg)"
-      })
-    }
-
-    submit.addEventListener("click", function() {
-      contact.style.display = "none";
-    })
-    opn.addEventListener("click", function() {
-      contact.style.display = "flex";
-    })
-    close.addEventListener("click", function() {
-      contact.style.display = "none"
-    })
-
-    function removeimg() {
-      img.src = ""
-      r.style.display = "none"
-      sw.value = "175";
-      img.style.background = "transparent";
-      sh.value = "175";
-      img.style.height = "100px"
-      img.style.width = "100px"
-      img.style.borderRadius = "0"
-    }
-    if ('webkitSpeechRecognition' in window) {
-      const recognition = new webkitSpeechRecognition();
-      recognition.continuous = false;
-      recognition.interimResults = false;
-      recognition.onresult = function(event) {
-        const transcript = event.results[0][0].transcript;
-        result.textContent = transcript;
-        let noSpaces = transcript.replace(/\s+/g, '');
-        img.style.backgroundColor = noSpaces;
-        img.style.borderRadius = transcript + "px";
-      };
-      recognition.onerror = function(event) {
-        console.error('Speech recognition error:', event.error);
-      };
-      startBtn.onclick = function() {
-        result.textContent = 'Listening...';
-        recognition.start();
-      };
-    } else {
-      result.textContent = 'Speech recognition is not supported in this browser.';
-    }
-
-    function saveImage() {
-      const imgElement = document.getElementById("image");
-
-      if (!imgElement.src) {
-        alert("Please upload and edit an image before saving!");
-        return;
-      }
-
-      // Create a temporary canvas to draw the image
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-
-      // Set canvas size to the image size
-      const width = imgElement.width;
-      const height = imgElement.height;
-      const borderRadius = parseInt(window.getComputedStyle(imgElement).borderRadius, 10);
-
-      canvas.width = width;
-      canvas.height = height;
-
-      // Apply border radius and draw the image
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.beginPath();
-      ctx.moveTo(borderRadius, 0);
-      ctx.lineTo(width - borderRadius, 0);
-      ctx.quadraticCurveTo(width, 0, width, borderRadius);
-      ctx.lineTo(width, height - borderRadius);
-      ctx.quadraticCurveTo(width, height, width - borderRadius, height);
-      ctx.lineTo(borderRadius, height);
-      ctx.quadraticCurveTo(0, height, 0, height - borderRadius);
-      ctx.lineTo(0, borderRadius);
-      ctx.quadraticCurveTo(0, 0, borderRadius, 0);
-      ctx.closePath();
-      ctx.clip();
-
-      const img = new Image();
-      img.src = imgElement.src;
-
-      img.onload = function() {
-        ctx.drawImage(img, 0, 0, width, height);
-
-        // Generate a downloadable link
-        const link = document.createElement("a");
-        link.download = "edited_image.png"; // Set the file name
-        link.href = canvas.toDataURL("image/png"); // Convert canvas to a data URL
-        link.click(); // Trigger the download
-      };
-    }
-  </script>
-  <script>
-    const audioElement = document.getElementById('background-audio');
-    const playPauseBtn = document.getElementById('play-pause-btn');
-    const progressBar = document.getElementById('progress-bar');
-    const currentTimeSpan = document.getElementById('current-time');
-    const totalTimeSpan = document.getElementById('total-time');
-    const selectElement = document.getElementById('song-select');
-    const repeatBtn = document.getElementById('repeat-btn');
-    let repeatMode = localStorage.getItem("mode"); // "all", "one", "none"
-
-    window.onload = () => {
-      const savedSong = localStorage.getItem('lastPlayedSong');
-      const savedTitle = localStorage.getItem('lastPlayedSongTitle');
-      const savedTime = localStorage.getItem('lastPlayedTime');
-
-      if (savedSong && savedTitle) {
-        document.getElementById('audio-source').src = savedSong;
-        document.getElementById('song-title').textContent = "Now Playing: " + savedTitle;
-
-        [...selectElement.options].forEach((option, index) => {
-          if (option.value === savedSong) selectElement.selectedIndex = index;
-        });
-
-        audioElement.load();
-
-        if (savedTime) {
-          audioElement.currentTime = parseFloat(savedTime);
-        }
-
-        playPauseBtn.textContent = "▶";
-      }
-
-      setupMediaSession();
-    };
-
-    function playNextSong() {
-      const currentIndex = selectElement.selectedIndex;
-      const nextIndex = (currentIndex + 1) % selectElement.options.length;
-      selectElement.selectedIndex = nextIndex;
-      changeSong();
-    }
-
-    function playPreviousSong() {
-      const currentIndex = selectElement.selectedIndex;
-      const previousIndex = (currentIndex - 1 + selectElement.options.length) % selectElement.options.length;
-      selectElement.selectedIndex = previousIndex;
-      changeSong();
-    }
-
-    function changeSong() {
-      const selectedOption = selectElement.options[selectElement.selectedIndex];
-      document.getElementById('audio-source').src = selectedOption.value;
-      document.getElementById('song-title').textContent = "Now Playing: " + selectedOption.getAttribute('data-title');
-
-      audioElement.load();
-      audioElement.play();
-      playPauseBtn.textContent = "❚❚";
-
-      localStorage.setItem('lastPlayedSong', selectedOption.value);
-      localStorage.setItem('lastPlayedSongTitle', selectedOption.getAttribute('data-title'));
-
-      updateMediaSession(selectedOption.getAttribute('data-title'));
-    }
-
-    function togglePlayPause() {
-      if (audioElement.paused) {
-        audioElement.play();
-        playPauseBtn.textContent = "❚❚";
-      } else {
-        audioElement.pause();
-        playPauseBtn.textContent = "▶";
-      }
-    }
-    toggleRepeat()
-
-    function toggleRepeat() {
-      if (repeatMode === "all") {
-        repeatMode = "one";
-        localStorage.setItem("mode", repeatMode)
-        // Repeat one song
-        repeatBtn.textContent = "🔂";
-      } else if (repeatMode === "one") {
-        repeatMode = "none"; // Sequential play (no repeat)
-        localStorage.setItem("mode", repeatMode)
-        repeatBtn.textContent = "➡";
-      } else {
-        repeatMode = "all"; // Repeat all songs
-        localStorage.setItem("mode", repeatMode)
-        repeatBtn.textContent = "🔁";
-      }
-    }
-
-    audioElement.addEventListener('ended', () => {
-      if (repeatMode === "one") {
-        // Replay the current song
-        audioElement.currentTime = 0;
-        audioElement.play();
-      } else if (repeatMode === "all") {
-        // Play the next song in the playlist
-        playNextSong();
-      } else {
-        const currentIndex = selectElement.selectedIndex;
-        if (currentIndex < selectElement.options.length - 1) {
-          // Move to the next song if sequential play is enabled
-          playNextSong();
-        } else {
-          // Stop playback when the last song finishes and reset to the first song
-          audioElement.currentTime = 0;
-          selectElement.selectedIndex = 0; // Select the first song
-          const selectedOption = selectElement.options[selectElement.selectedIndex];
-          document.getElementById('audio-source').src = selectedOption.value;
-          document.getElementById('song-title').textContent = "Now Playing: " + selectedOption.getAttribute('data-title');
-
-          audioElement.load();
-          playPauseBtn.textContent = "❚❚";
-
-          localStorage.setItem('lastPlayedSong', selectedOption.value);
-          localStorage.setItem('lastPlayedSongTitle', selectedOption.getAttribute('data-title'));
-
-          updateMediaSession(selectedOption.getAttribute('data-title')); // Load and update the selected song
-          playPauseBtn.textContent = "▶"; // Update play button to paused state
-          const { currentTime, duration } = audioElement;
-          const progressPercent = (currentTime / 0) * 100;
-          progressBar.value = 0;
-          progressBar.style.background = "#ddd";
-          currentTimeSpan.textContent = formatTime(0);
-          totalTimeSpan.textContent = formatTime(0);
-          audioElement.pause()
-        }
-      }
-    });
-
-    audioElement.addEventListener('timeupdate', () => {
-      const { currentTime, duration } = audioElement;
-
-      if (!isNaN(duration)) {
-        const progressPercent = (currentTime / duration) * 100;
-        progressBar.value = progressPercent;
-        progressBar.style.background = `linear-gradient(to right, red ${progressPercent}%, #ddd ${progressPercent}%)`;
-
-        currentTimeSpan.textContent = formatTime(currentTime);
-        totalTimeSpan.textContent = formatTime(duration);
-        localStorage.setItem('lastPlayedTime', currentTime);
-      }
-    });
-
-    progressBar.addEventListener('input', () => {
-      if (!isNaN(audioElement.duration)) {
-        audioElement.currentTime = (progressBar.value / 100) * audioElement.duration;
-      }
-    });
-
-    function formatTime(seconds) {
-      const minutes = Math.floor(seconds / 60);
-      const secs = Math.floor(seconds % 60);
-      return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
-    }
-
-    function setupMediaSession() {
-      if ('mediaSession' in navigator) {
-        navigator.mediaSession.setActionHandler('play', () => {
-          audioElement.play();
-          playPauseBtn.textContent = "❚❚";
-        });
-        navigator.mediaSession.setActionHandler('pause', () => {
-          audioElement.pause();
-          playPauseBtn.textContent = "▶";
-        });
-        navigator.mediaSession.setActionHandler('nexttrack', playNextSong);
-        navigator.mediaSession.setActionHandler('previoustrack', playPreviousSong);
-        updateMediaSession(localStorage.getItem('lastPlayedSongTitle'));
-      }
-    }
-
-    function updateMediaSession(title) {
-      if ('mediaSession' in navigator) {
-        navigator.mediaSession.metadata = new MediaMetadata({
-          title: title || "Select a song to play",
-          artist: "Unknown Artist",
-          album: "Unknown Album",
-          artwork: [
-            { src: "music-abstract-with-headphones-horizontal-wallpaper-photo.jpg", sizes: "512x512", type: "image/jpeg" }
-          ]
-        });
-      }
-    }
-  </script>
+  <script src="web.js"></script>
 </body>
 
 </html>
